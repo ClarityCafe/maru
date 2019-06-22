@@ -19,25 +19,7 @@ disk2 : start=   1, size=    1, Id= ee
 EOF
 }
 
-install_raspberrypi_bootloader() {
-  local efi_offset_sectors=$(partoffset "$1" 12)
-  local efi_size_sectors=$(partsize "$1" 12)
-  local efi_offset=$(( efi_offset_sectors * 512 ))
-  local efi_size=$(( efi_size_sectors * 512 ))
-  local mount_opts=loop,offset=${efi_offset},sizelimit=${efi_size}
-  local efi_dir=$(mktemp -d)
-  local kernel_img=$(ls "${ROOT}/boot/Image"*)
-  sudo mount -o "${mount_opts}"  "$1" "${efi_dir}"
-
-  info "Installing firmware, kernel and overlays"
-  sudo cp -r "${ROOT}/firmware/rpi/"* "${efi_dir}/"
-  sudo cp ${kernel_img} "${efi_dir}/kernel8.img"
-  sudo umount "${efi_dir}"
-  rmdir "${efi_dir}"
-}
-
 board_setup() {
-  install_raspberrypi_bootloader "$1"
   install_hybrid_mbr "$1"
 }
 
