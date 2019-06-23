@@ -6,7 +6,7 @@
 sudo mkdir -p /usr/local/repo
 sudo chmod -R 777 /usr/local/repo
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/repo/depot_tools
-echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> $HOME/.profile
+export PATH=/usr/local/repo/depot_tools:$PATH
 
 source $HOME/.profile
 
