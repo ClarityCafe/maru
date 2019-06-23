@@ -1,4 +1,4 @@
-# The Maru Experimental Board
+# The Maru Experimental Board [![Build Status](https://dev.azure.com/enra0226/Maru/_apis/build/status/sr229.maru?branchName=master)](https://dev.azure.com/enra0226/Maru/_build/latest?definitionId=1&branchName=master)
 
 Maru is a experimental board I created to better understand Chromium OS. Right now its primary aim is to be built and ultimately, support a wide range of hardware, ala-CloudReady.
 
