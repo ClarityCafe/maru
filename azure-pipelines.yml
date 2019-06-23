@@ -6,7 +6,7 @@ jobs:
    pool:
     image: 'ubuntu-16.04'
    variables: 
-     chromiumos_stabilize_version: stabilize-10718.88.B
+     chromeos_stabilize_version: stabilize-10718.88.B
      board_arch: amd64
    steps:
      - bash: ./.ci/setup-env
