@@ -10,19 +10,19 @@ echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> $HOME/.profile
 
 source $HOME/.profile
 
-mkdir -p build/chromiumos-$(chromeos_stabilize_version)
+mkdir -p build/chromiumos-$CHROMEOS_STABILIZE_VERSION
 mkdir -p build/overlays
 
-cp -vRf *-maru-$(board_arch) build/overlays
+cp -vRf *-maru-$BOARD_ARCH build/overlays
 
-cd build/chromiumos-$(chromeos_stabilize_version) && \
-repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $(chromeos_stabilize_version) && \
+cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
+repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
 repo sync -j8
 
-ln -s ../overlays/baseboard-maru-$(board_arch) src/overlays/;
-ln -s ../overlays/overlay-maru-$(board_arch) src/overlays/;
+ln -s ../overlays/baseboard-maru-$BOARD_ARCH src/overlays/;
+ln -s ../overlays/overlay-maru-$BOARD_ARCH src/overlays/;
 
-wget -qO - $(chromiumos_apikey_url) > $HOME/.googleapikeys
+wget -qO - $( base64 -d $CHROMEOS_APIKEY_URL) > $HOME/.googleapikeys
 
-echo "Ready to accept cros_sdk commands. Leaving CD'ed to $chromeos_stabilize_version".
+echo "Ready to accept cros_sdk commands. Leaving CD'ed to $CHROMEOS_STABILIZE_VERSION".
 exit 0;
