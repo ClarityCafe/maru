@@ -8,8 +8,6 @@ sudo chmod -R 777 /usr/local/repo
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/repo/depot_tools
 export PATH=/usr/local/repo/depot_tools:$PATH
 
-source $HOME/.profile
-
 mkdir -p build/chromiumos-$CHROMEOS_STABILIZE_VERSION
 mkdir -p build/overlays
 
@@ -22,7 +20,7 @@ repo sync -j8
 ln -s ../overlays/baseboard-maru-$BOARD_ARCH src/overlays/;
 ln -s ../overlays/overlay-maru-$BOARD_ARCH src/overlays/;
 
-wget -qO - $( base64 -d $CHROMEOS_APIKEY_URL) > $HOME/.googleapikeys
+wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > $HOME/.googleapikeys
 
 echo "Ready to accept cros_sdk commands. Leaving CD'ed to $CHROMEOS_STABILIZE_VERSION".
 exit 0;

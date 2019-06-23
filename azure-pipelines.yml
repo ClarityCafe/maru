@@ -8,9 +8,6 @@ jobs:
   variables:
     board_arch: amd64
     chromeos_stabilize_version: stabilize-10718.88.B
-    chromeos_apikey_url: aHR0cHM6Ly9naXN0LmdpdGh1YnVzZXJjb250ZW50LmNvbS9zcjIyOS9iODhmZmEzNDI3ZGVkNGE3
-MTU4MGU2MmU0NDIyMDRlNS9yYXcvYjc2NjRiYjYxMzkwNDc2YTY2ZjBhZDljNGQ2NzE2MDEwMTE0
-Y2Q4MC8uZ29vZ2xlYXBpa2V5cwo=
   steps:
     - bash: ./.ci/setup-env
     - bash: cros_sdk -- ./setup_board --board=maru-$(board_arch)
