@@ -10,4 +10,7 @@ jobs:
     chromeos_stabilize_version: stabilize-10718.88.B
   steps:
     - bash: ./.ci/setup-env
+    - bash: source $HOME/.profile; cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH
+    - bash: source $HOME/.profile; cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH
+    - bash: source $HOME/.profile; cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && cros_sdk -- ./build_image --board=maru-$BOARD_ARCH 
     - bash: cd build/chromiumos-$(chromeos_stabilize_version)/src/build/images/maru-$(board_arch) && ls
