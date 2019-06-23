@@ -1,0 +1,23 @@
+matrix:
+   include:
+    #######################
+    #    amd64 Matrix     #
+    #######################
+     - language: generic
+       dist: xenial
+       env:
+         - BOARD_ARCH=amd64 CHROMEOS_STABILIZE_VERSION=stabilize-10718.88.B
+       install:
+         - travis_wait 120 ./.ci/setup-env
+         - cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION
+         - travis_wait 2000 cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH
+         - travis_wait 2000 cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH 
+       script:
+         - travis_wait 2000 cros_sdk -- ./build_image --board=maru-$BOARD_ARCH
+       after_script:
+         - cd build/chromiumos-*/src/build/images/maru-$BOARD_ARCH && ls
+         
+
+
+notifications:
+  email: false
