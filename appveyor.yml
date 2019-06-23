@@ -7,8 +7,8 @@ branches:
 max_jobs: 2
 
 environment:
-   board_arch: amd64
-   chromeos_stabilize_version: stabilize-10718.88.B
+   BOARD_ARCH: amd64
+   CHROMEOS_STABILIZE_VERSION: stabilize-10718.88.B
 
 install:
   - .ci/setup-env
