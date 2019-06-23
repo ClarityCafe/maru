@@ -9,5 +9,5 @@ jobs:
     board_arch: amd64
     chromeos_stabilize_version: stabilize-10718.88.B
   steps:
-    - bash: ./.ci/build-cros
+    - bash: ./.ci/setup-env
     - bash: cd build/chromiumos-$(chromeos_stabilize_version)/src/build/images/maru-$(board_arch) && ls
