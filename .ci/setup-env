@@ -1,0 +1,28 @@
+#!/bin/sh
+# Copyright 2019 (c) Kibo Hikari
+# Licensed under MIT
+
+# Setup script so we don't have to do shady shit.
+sudo mkdir -p /usr/local/repo
+sudo chmod -R 777 /usr/local/repo
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/repo/depot_tools
+echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> $HOME/.profile
+
+source $HOME/.profile
+
+mkdir -p build/chromiumos-$(chromeos_stabilize_version)
+mkdir -p build/overlays
+
+cp -vRf *-maru-$(board_arch) build/overlays
+
+cd build/chromiumos-$(chromeos_stabilize_version) && \
+repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $(chromeos_stabilize_version) && \
+repo sync -j8
+
+ln -s ../overlays/baseboard-maru-$(board_arch) src/overlays/;
+ln -s ../overlays/overlay-maru-$(board_arch) src/overlays/;
+
+wget -qO - $(chromiumos_apikey_url) > $HOME/.googleapikeys
+
+echo "Ready to accept cros_sdk commands. Leaving CD'ed to $chromeos_stabilize_version".
+exit 0;
