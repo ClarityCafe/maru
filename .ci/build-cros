@@ -3,7 +3,7 @@
 # Licensed under MIT
 
 # Making sure we have the needed deps
-sudo apt-get -y install git-core gitk git-gui subversion curl lvm2 thin-provisioning-tools python-pkg-resources python-virtualenv python-oauth2client
+sudo apt-get update && sudo apt-get -y install git-core gitk git-gui subversion curl lvm2 thin-provisioning-tools python-pkg-resources python-virtualenv python-oauth2client
 
 # Setup script so we don't have to do shady shit.
 sudo mkdir -p /usr/local/repo
