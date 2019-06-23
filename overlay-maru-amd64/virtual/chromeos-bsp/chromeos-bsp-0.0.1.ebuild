@@ -18,8 +18,12 @@ IUSE=""
 
 RDEPEND="
    www-plugins/chrome-binary-plugins
-   media-libs/x264
    media-libs/libvpx
+	net-wireless/broadcom-sta
+	net-wireless/rtl8188eu
+	net-wireless/rtl8723au
+	net-wireless/rtl8723bu
+	net-wireless/rtl8812au
    chromeos-base/chromeos-bsp-maru-amd64
    "
 

@@ -13,7 +13,6 @@ IUSE=""
 
 RDEPEND="
     chromeos-base/auto-expand-partition
-    chromeos-base/autotest-capability-maru-amd64
 "
 
 DEPEND="${RDEPEND}"
