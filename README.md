@@ -105,7 +105,7 @@ Once the build finishes, you can find your images at `/project/chromiumos-R74/sr
 
 ## Installing the image
 
-You can use ``dd`` in Linux or use Rufus in DD mode in Linux to your USB.
+You can use ``dd`` in Linux or Rufus in DD mode on Windows to write the image to your USB.
 
 Once the image finishes writing to a USB, boot it to your PC, and cross your fingers.
 
