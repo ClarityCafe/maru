@@ -9,7 +9,5 @@ jobs:
     board_arch: amd64
     chromeos_stabilize_version: stabilize-10718.88.B
   steps:
-    - bash: ./.ci/setup-env
-    - bash: PATH=/usr/local/repo/depot_tools:$PATH cros_sdk -- ./setup_board --board=maru-$(board_arch)
-    - bash: PATH=/usr/local/repo/depot_tools:$PATH cros_sdk -- ./build_packages --board=maru-$(board_arch)
-    - bash: PATH=/usr/local/repo/depot_tools:$PATH cros_sdk -- ./build_image --board=maru-$(board_arch)
+    - bash: ./.ci/build-cros
+    - bash: cd build/chromiumos-$(chromeos_stabilize_version)/src/build/images/maru-$(board_arch) && ls

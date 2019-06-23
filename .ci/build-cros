@@ -25,4 +25,8 @@ ln -s ../overlays/overlay-maru-$BOARD_ARCH src/overlays/;
 wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > $HOME/.googleapikeys
 
 echo "Ready to accept cros_sdk commands. Leaving CD'ed to $CHROMEOS_STABILIZE_VERSION".
-exit 0;
+
+cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH && \
+cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH && \
+cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+
