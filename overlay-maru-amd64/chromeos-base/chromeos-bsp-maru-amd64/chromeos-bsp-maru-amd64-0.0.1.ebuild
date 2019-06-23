@@ -13,22 +13,13 @@ IUSE=""
 
 RDEPEND="
     chromeos-base/auto-expand-partition
+    chromeos-base/autotest-capability-maru-amd64
 "
 
 DEPEND="${RDEPEND}"
 S=${WORKDIR}
 
 src_install() {
-  udev_dorules "${FILESDIR}/udev/10-vchiq-permissions.rules"
-  udev_dorules "${FILESDIR}/udev/99-rpi3-restart-ui-after-hdmi-connetced.rules"
-  exeinto /lib/udev
-  doexe "${FILESDIR}/udev/restart_ui.sh"
-  insinto /lib
-  doins -r "${FILESDIR}/firmware"
-  insinto /etc/init
-  doins "${FILESDIR}/bt/bluetooth_uart.conf"
-  doins "${FILESDIR}/bt/console-ttyAMA0.override"
-  doins "${FILESDIR}/audio/force_audio_output_to_headphones.conf"
-  insinto /firmware/rpi
-  doins "${FILESDIR}/kernel-config"/*.txt
+   # For now, we do a empty echo since we might be able to re-use this for ARM overlays.
+   echo "";
 }

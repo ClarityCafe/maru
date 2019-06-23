@@ -1,0 +1,2 @@
+# Libinput support
+INPUT_DEVICES="libinput"
