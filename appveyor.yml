@@ -12,6 +12,7 @@ environment:
 
 install:
   - .ci/setup-env
+  - source $HOME/.profile
 
 # scripts to run before build
 before_build:

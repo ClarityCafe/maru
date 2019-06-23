@@ -11,6 +11,8 @@ sudo chmod -R 777 /usr/local/repo
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/repo/depot_tools
 export PATH=/usr/local/repo/depot_tools:$PATH
 
+echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> $HOME/.profile;
+
 mkdir -p build/chromiumos-$CHROMEOS_STABILIZE_VERSION
 mkdir -p build/overlays
 
