@@ -3,6 +3,7 @@ trigger:
 
 jobs:
 - job: build_amd64
+  timeoutInMinutes: 600
   pool:
     vmImage: 'ubuntu-16.04'
   variables:
