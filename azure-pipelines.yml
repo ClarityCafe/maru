@@ -8,10 +8,20 @@ jobs:
     vmImage: 'ubuntu-16.04'
   variables:
     board_arch: amd64
-    chromeos_stabilize_version: stabilize-10718.88.B
+    chromeos_stabilize_version: release-R74-11895.B
   steps:
-    - bash: ./.ci/setup-env
-    - bash: source $HOME/.profile; cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH
-    - bash: source $HOME/.profile; cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH
-    - bash: source $HOME/.profile; cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && cros_sdk -- ./build_image --board=maru-$BOARD_ARCH 
+    - bash: bash -c "exec .ci/setup-env"
+    - bash: .ci/build
     - bash: cd build/chromiumos-$(chromeos_stabilize_version)/src/build/images/maru-$(board_arch) && ls
+
+#- job: build_amd64_hosted
+#  timeoutInMinutes: 600
+#  pool:
+#    name: Hosted (Quark)
+#  variables:
+#    board_arch: amd64
+#    chromeos_stabilize_version: release-R74-11895.B
+#  steps:
+#    - bash: .ci/setup-env
+#    - bash: .ci/build
+#    - bash: cd build/chromiumos-$(chromeos_stabilize_version)/src/build/images/maru-$(board_arch) && ls

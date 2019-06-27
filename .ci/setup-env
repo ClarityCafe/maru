@@ -2,6 +2,11 @@
 # Copyright 2019 (c) Kibo Hikari
 # Licensed under MIT
 
+
+echo "This is written specifically only for Azure Pipelines. If you intend to use it for other CIs, let me know :)"
+
+sleep 3;
+
 # Making sure we have the needed deps
 sudo apt-get update && sudo apt-get -y install git-core gitk git-gui subversion curl lvm2 thin-provisioning-tools python-pkg-resources python-virtualenv python-oauth2client
 
@@ -14,26 +19,28 @@ export PATH=/usr/local/repo/depot_tools:$PATH
 echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> $HOME/.profile;
 
 mkdir -p build/chromiumos-$CHROMEOS_STABILIZE_VERSION
-mkdir -p build/overlays
+mkdir -p build/overlays/maru-$BOARD_ARCH
 
-cp -vRf *-maru-$BOARD_ARCH build/overlays/maru-$BOARD_ARCH/
+cp -vRf maru-$BOARD_ARCH build/overlays/
 
-cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
-repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
-repo sync -j8
-
-umask 022
-
-ln -s ../overlays/* src/overlays/;
-
-wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > $HOME/.googleapikeys
-
-echo "Setup done. Setting Temporary Git credentials for cros_sdk"
+echo "Setup done. Setting Temporary Git credentials for repo"
 
 # Setting Dummy credentials just to screw with cros_sdk
 
 git config --global user.name "Azure DevOps Builder";
-git config --global user.email azure@microsoft.com
+git config --global user.email azure@microsoft.com;
+git config --global color.ui true;
+
+cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
+repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
+repo sync -j 50
+
+umask 022
+
+cp -vRf ../overlays/* src/overlays/;
+
+wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > $HOME/.googleapikeys
+
 
 echo "Ready to accept cros_sdk commands. Leaving CD'ed to $CHROMEOS_STABILIZE_VERSION"
 exit 0;

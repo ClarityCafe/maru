@@ -1,1 +1,4 @@
 rpi3
+.ci/shc
+*.private
+*.x*
