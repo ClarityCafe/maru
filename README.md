@@ -1,10 +1,10 @@
-# The Maru Experimental Board [![Build Status](https://dev.azure.com/enra0226/Maru/_apis/build/status/sr229.maru?branchName=master)](https://dev.azure.com/enra0226/Maru/_build/latest?definitionId=1&branchName=master) [![Build Status](https://travis-ci.com/sr229/maru.svg?branch=master)](https://travis-ci.com/sr229/maru)
+# Project Maru [![CircleCI](https://circleci.com/gh/ClarityCafe/maru.svg?style=svg)](https://circleci.com/gh/ClarityCafe/maru)
 
-Maru is a experimental board I created to better understand Chromium OS. Right now its primary aim is to be built and ultimately, support a wide range of hardware, ala-CloudReady.
+Maru is a experimental board sr229 to better understand Chromium OS. Right now its primary aim is to be built and ultimately, support a wide range of hardware, ala-CloudReady.
 
 ## Roadmap
 
-- [ ] :clap: MAKE :clap: IT :clap: BUILD :clap:
+- [x] :clap: MAKE :clap: IT :clap: BUILD :clap:
 
 - [x] work on driver support.
    - [x] include Libinput support and add additional drivers.
