@@ -42,7 +42,7 @@ $ mkdir -p $HOME/project/chromiumos-R74      # This is the directory to hold Chr
 $ mkdir -p $HOME/project/overlays            # This is the directory to hold this repository.
 
 ```
-Now, we're ready to pull the Chromium OS source code.
+Now, we're ready to pull the Chromium OS source code. You will need to authenticate yourself [here](https://chromium.googlesource.com/new-password) before continuing.
 
 But first we need to know which release you'd like to build via using `git ls-remote`
 
