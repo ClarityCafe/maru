@@ -23,12 +23,14 @@ jobs:
       - run:
           name: CROS_SDK - Build Packages
           command: |
-            source $HOME/.profile
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH;
       - run:
           name: CROS_SDK - Build Image
           command: |
-            source $HOME/.profile
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
 
   deploy_amd64:
@@ -44,17 +46,20 @@ jobs:
       - run:
           name: CROS_SDK - Setup Board
           command: |
-            source $HOME/.profile
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
       - run:
           name: CROS_SDK - Build Packages
           command: |
-            source $HOME/.profile
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH;
       - run:
           name: CROS_SDK - Build Image
           command: |
-            source $HOME/.profile
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
       - run:
           name: Publish to GitHub
