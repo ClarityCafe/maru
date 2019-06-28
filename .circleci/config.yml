@@ -33,6 +33,35 @@ jobs:
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
 
+  build_aarch64:
+    machine: true
+    environment:
+      BOARD_ARCH: aarch64
+      CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
+    steps:
+      - checkout
+      - run:
+          name: Setup Environment
+          command: .ci/setup-env         
+      - run:
+          name: CROS_SDK -  Walk to CrOS directory and Setup Board
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Packages
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Image
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+
   deploy_amd64:
     machine: true
     environment:
@@ -65,7 +94,41 @@ jobs:
           name: Publish to GitHub
           command: |
             go get github.com/tcnksm/ghr
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -recreate ${CHROMEOS_STABILIZE_VERSION} ./artifacts/    
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace ${CHROMEOS_STABILIZE_VERSION} build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/src/build/images/maru-${BOARD_ARCH}/    
+
+  deploy_aarch64:
+    machine: true
+    environment:
+      BOARD_ARCH: aarch64
+      CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
+    steps:
+      - checkout
+      - run:
+          name: Setup Environment
+          command: .ci/setup-env         
+      - run:
+          name: CROS_SDK - Setup Board
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Packages
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Image
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+      - run:
+          name: Publish to GitHub
+          command: |
+            go get github.com/tcnksm/ghr
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace ${CHROMEOS_STABILIZE_VERSION} build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/src/build/images/maru-${BOARD_ARCH}/    
 
 
 
@@ -74,12 +137,19 @@ workflows:
   untagged-build:
     jobs:
       - build_amd64
+      - build_aarch64
   tagged-build:
     jobs:
       - deploy_amd64:
           filters:
-            # ignore any commit on any branch by default
             branches:
               ignore: /.*/
             tags:
               only: /release-R[0-9]{2}-[0-9]{5}\.B/
+# ----  Disabled AARCH64 deploys, AARCH64 is experimental! --- #
+#      - deploy_aarch64:
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /release-R[0-9]{2}-[0-9]{5}\.B/
