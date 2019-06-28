@@ -23,6 +23,8 @@ mkdir -p build/overlays/maru-$BOARD_ARCH
 
 cp -vRf maru-$BOARD_ARCH build/overlays/
 
+echo 'target_os = ["chromeos"]' > $HOME/.gclient;
+
 echo "Setup done. Setting Temporary Git credentials for repo"
 
 # Setting Dummy credentials just to screw with cros_sdk

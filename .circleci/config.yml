@@ -15,9 +15,10 @@ jobs:
           name: Setup Environment
           command: .ci/setup-env         
       - run:
-          name: CROS_SDK - Setup Board
+          name: CROS_SDK -  Walk to CrOS directory and Setup Board
           command: |
-            source $HOME/.profile
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
       - run:
           name: CROS_SDK - Build Packages
