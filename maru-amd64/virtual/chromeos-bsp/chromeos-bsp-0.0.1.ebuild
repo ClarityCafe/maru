@@ -21,8 +21,6 @@ RDEPEND="
 	sys-kernel/linux-firmware
     www-plugins/chrome-binary-plugins
     media-libs/libvpx
-	media-libs/mesa
-	media-libs/minigbm
 	media-libs/x264
 	net-wireless/broadcom-sta
 	net-wireless/rtl8188eu

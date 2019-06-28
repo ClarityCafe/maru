@@ -15,8 +15,20 @@ jobs:
           name: Setup Environment
           command: .ci/setup-env         
       - run:
-          name: Build Image
-          command: .ci/build
+          name: CROS_SDK - Setup Board
+          command: |
+            source $HOME/.profile
+            cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Packages
+          command: |
+            source $HOME/.profile
+            cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Image
+          command: |
+            source $HOME/.profile
+            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
 
   deploy_amd64:
     machine: true
@@ -29,8 +41,20 @@ jobs:
           name: Setup Environment
           command: .ci/setup-env         
       - run:
-          name: Build Image
-          command: .ci/build
+          name: CROS_SDK - Setup Board
+          command: |
+            source $HOME/.profile
+            cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Packages
+          command: |
+            source $HOME/.profile
+            cros_sdk -- ./build_packages --board=maru-$BOARD_ARCH;
+      - run:
+          name: CROS_SDK - Build Image
+          command: |
+            source $HOME/.profile
+            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
       - run:
           name: Publish to GitHub
           command: |
