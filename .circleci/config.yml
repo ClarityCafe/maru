@@ -11,9 +11,16 @@ jobs:
       CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
       - run:
           name: Setup Environment
-          command: .ci/setup-env         
+          command: .ci/setup-env  
+      - save_cache:
+          key: {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
+          paths:
+            - "./build/chromiumos-release-R74-11895.B"             
       - run:
           name: CROS_SDK -  Walk to CrOS directory and Setup Board
           command: |
@@ -40,9 +47,16 @@ jobs:
       CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
       - run:
           name: Setup Environment
-          command: .ci/setup-env         
+          command: .ci/setup-env  
+      - save_cache:
+          key: {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
+          paths:
+            - "./build/chromiumos-release-R74-11895.B"            
       - run:
           name: CROS_SDK -  Walk to CrOS directory and Setup Board
           command: |
@@ -69,9 +83,16 @@ jobs:
       CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
       - run:
           name: Setup Environment
-          command: .ci/setup-env         
+          command: .ci/setup-env  
+      - save_cache:
+          key: {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
+          paths:
+            - "./build/chromiumos-release-R74-11895.B"             
       - run:
           name: CROS_SDK - Setup Board
           command: |
@@ -103,9 +124,16 @@ jobs:
       CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
       - run:
           name: Setup Environment
-          command: .ci/setup-env         
+          command: .ci/setup-env  
+      - save_cache:
+          key: {{ .Environment.CHROMEOS_STABILIZE_VERSION }}
+          paths:
+            - "./build/chromiumos-release-R74-11895.B"            
       - run:
           name: CROS_SDK - Setup Board
           command: |

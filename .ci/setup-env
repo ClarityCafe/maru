@@ -33,9 +33,13 @@ git config --global user.name "Azure DevOps Builder";
 git config --global user.email azure@microsoft.com;
 git config --global color.ui true;
 
-cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
-repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
-repo sync -j 50
+if [ ! -d "build/chromiumos-$CHROMEOS_STABILIZE_VERSION" ]; then
+ cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
+ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
+ repo sync -j 50
+else
+  echo "Skipping Repo Sync. Cache exists";
+fi 
 
 umask 022
 
