@@ -34,7 +34,7 @@ git config --global user.email azure@microsoft.com;
 git config --global color.ui true;
 
 cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
-repo init --depth=100 -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
+repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
 repo sync -j 100
 
 umask 022
