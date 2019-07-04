@@ -18,7 +18,6 @@ IUSE=""
 
 RDEPEND="
     !chromeos-base/chromeos-bsp-null
-	sys-kernel/linux-firmware
     www-plugins/chrome-binary-plugins
     media-libs/libvpx
 	media-libs/x264
