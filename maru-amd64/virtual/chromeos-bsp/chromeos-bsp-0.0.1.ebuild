@@ -19,7 +19,6 @@ IUSE=""
 RDEPEND="
     !chromeos-base/chromeos-bsp-null
     www-plugins/chrome-binary-plugins
-    media-libs/libvpx
 	media-libs/x264
 	net-wireless/broadcom-sta
 	net-wireless/rtl8188eu
