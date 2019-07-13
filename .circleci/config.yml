@@ -8,7 +8,7 @@ jobs:
     machine: true
     environment:
       BOARD_ARCH: amd64
-      CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
+      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B
     steps:
       - checkout
       - run:
