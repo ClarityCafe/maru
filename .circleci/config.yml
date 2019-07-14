@@ -21,11 +21,19 @@ jobs:
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
       - run:
-          name: CROS_SDK - Build Packages
+          name: CROS_SDK - Build Kernel
           command: |
             source $HOME/.profile;
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
+            cros_sdk --download -- ./build_kernel.sh --board=maru-$BOARD_ARCH;
+          timeout: 1200
+          no_output_timeout: 20h
+      - run:
+          name: CROS_SDK - Build Platform Packages
+          command: |
+            source $HOME/.profile;
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+            cros_sdk --download -- ./build_platform_packages.sh --board=maru-$BOARD_ARCH;
           timeout: 1200
           no_output_timeout: 20h
       - run:
