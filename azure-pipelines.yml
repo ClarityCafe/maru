@@ -16,7 +16,7 @@ jobs:
     - script: |
         source $HOME/.profile;
         cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-        cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;;
+        cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
       displayName: Setup Board
 
     - script: |
