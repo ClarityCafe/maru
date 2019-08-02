@@ -10,10 +10,25 @@ jobs:
     board_arch: amd64
     chromeos_stabilize_version: release-R74-11895.B
   steps:
-    - bash: bash -c "exec .ci/setup-env"
-    - bash: .ci/build
-    - bash: cd build/chromiumos-$(chromeos_stabilize_version)/src/build/images/maru-$(board_arch) && ls
+    - script: bash -c "exec .ci/setup-env"
+      displayName: Setup Environment
 
+    - script: |
+        source $HOME/.profile;
+        cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+        cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;;
+      displayName: Setup Board
+
+    - script: |
+        source $HOME/.profile;
+        cros_sdk -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
+      displayName: Build Platform Packages
+
+    - script: |
+        source $HOME/.profile;
+        cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+      displayName: Build Image
+  
 #- job: build_amd64_hosted
 #  timeoutInMinutes: 600
 #  pool:
