@@ -7,6 +7,6 @@ cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
 
 echo "Building Chromium OS Images";
 
-cros_sdk -- ./setup_board --board=maru-$BOARD_ARCH;
+cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;;
 cros_sdk -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
 cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
