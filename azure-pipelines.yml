@@ -15,17 +15,20 @@ jobs:
 
     - script: |
         source $HOME/.profile;
-        cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+        cp -vRf build/chromiumos-$CHROMEOS_STABILIZE_VERSION /tmp
+        cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
         cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
       displayName: Setup Board
 
     - script: |
         source $HOME/.profile;
+        cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
         cros_sdk -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
       displayName: Build Platform Packages
 
     - script: |
         source $HOME/.profile;
+        cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
         cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
       displayName: Build Image
   
