@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # set source so depot_tools is targeted properly
-source $HOME/.profile;
+source "$HOME/.profile";
 
-cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
+cd "build/chromiumos-$CHROMEOS_STABILIZE_VERSION";
 
 echo "Building Chromium OS Images";
 
-cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;;
-cros_sdk -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
-cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+cros_sdk --download -- ./setup_board --board=maru-"$BOARD_ARCH";
+cros_sdk -- ./build_packages --nowithdebug --board=maru-"$BOARD_ARCH";
+cros_sdk -- ./build_image --board=maru-"$BOARD_ARCH";

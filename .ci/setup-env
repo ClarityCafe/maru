@@ -14,16 +14,16 @@ sudo apt-get update && sudo apt-get -y install git-core gitk git-gui subversion 
 sudo mkdir -p /usr/local/repo
 sudo chmod -R 777 /usr/local/repo
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/repo/depot_tools
-export PATH=/usr/local/repo/depot_tools:$PATH
+export PATH="/usr/local/repo/depot_tools:$PATH"
 
-echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> $HOME/.profile;
+echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> "$HOME/.profile";
 
-mkdir -p build/chromiumos-$CHROMEOS_STABILIZE_VERSION
-mkdir -p build/overlays/maru-$BOARD_ARCH
+mkdir -p "build/chromiumos-$CHROMEOS_STABILIZE_VERSION"
+mkdir -p "build/overlays/maru-$BOARD_ARCH"
 
-cp -vRf maru-$BOARD_ARCH build/overlays/
+cp -vRf "maru-$BOARD_ARCH build/overlays/"
 
-echo 'target_os = ["chromeos"]' > $HOME/.gclient;
+echo 'target_os = ["chromeos"]' > "$HOME/.gclient";
 
 echo "Setup done. Setting Temporary Git credentials for repo"
 
@@ -33,15 +33,15 @@ git config --global user.name "Azure DevOps Builder";
 git config --global user.email azure@microsoft.com;
 git config --global color.ui true;
 
-cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION && \
-repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b $CHROMEOS_STABILIZE_VERSION && \
+cd "build/chromiumos-$CHROMEOS_STABILIZE_VERSION" && \
+repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b "$CHROMEOS_STABILIZE_VERSION" && \
 repo sync -j 100
 
 umask 022
 
 cp -vRf ../overlays/* src/overlays/;
 
-wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > $HOME/.googleapikeys
+wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > "$HOME/.googleapikeys"
 
 
 echo "Ready to accept cros_sdk commands. Leaving CD'ed to $CHROMEOS_STABILIZE_VERSION"
