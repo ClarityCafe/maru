@@ -19,4 +19,4 @@ jobs:
 
       # TODO: upload git artifact to Git tag.
       - name: Prepare Image for deployment
-        run: tar -czvf build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/build/images/maru-amd64/*.bin
+        run: tar -czvf $HOME/cros-$CHROMEOS_STABILIZE_VERSION.tar.gz build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/build/images/maru-amd64/latest/*.bin

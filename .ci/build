@@ -9,4 +9,4 @@ echo "Building Chromium OS Images";
 
 cros_sdk --download -- ./setup_board --board=maru-"$BOARD_ARCH";
 cros_sdk -- ./build_packages --nowithdebug --board=maru-"$BOARD_ARCH";
-cros_sdk -- ./build_image --board=maru-"$BOARD_ARCH";
+cros_sdk -- ./build_image --board=maru-"$BOARD_ARCH" base;

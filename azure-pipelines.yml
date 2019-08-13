@@ -30,7 +30,7 @@ jobs:
     - script: |
         source $HOME/.profile;
         cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-        cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+        cros_sdk -- ./build_image --board=maru-$BOARD_ARCH base;
       displayName: Build Image
   
 #- job: build_amd64_hosted
