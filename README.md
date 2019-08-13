@@ -77,14 +77,14 @@ Finally, head to this [documentation](http://www.chromium.org/developers/how-tos
 
 ### Prepare the Overlay
 
-Finally, you need to symbolic link this repo after cloning inside `project/overlays`.
+Finally, you need to copy this repo to `src/overlays` after cloning inside `project/overlays`.
 
 ```
 $ cd /project/overlays
 $ git clone https://github.com/sr229/maru.git
 
 $ cd /project/chromiumos-R74/src/overlays
-$ ln -s /project/overlays/maru/* .
+$ cp -vRf /project/overlays/maru/* .
 ```
 
 ### Build the image
@@ -93,9 +93,9 @@ Once that's all done, all that its left to do is run a this and wait.
 
 ```
 $ export BOARD=maru-amd64
-$ cros_sdk -- ./setup_board --board=${BOARD}
-$ cros_sdk -- ./build_packages --board=${BOARD}
-$ cros_sdk -- ./build_image --board=${BOARD}
+$ cros_sdk -- setup_board --board=${BOARD}
+$ cros_sdk -- ./build_packages --nowithdebug --board=${BOARD}
+$ cros_sdk -- ./build_image --board=${BOARD} base
 
 ```
 
@@ -112,3 +112,5 @@ Once the image finishes writing to a USB, boot it to your PC, and cross your fin
 ## Contributing
 
 Please read the [Chromium OS Developer Guide](http://www.chromium.org/chromium-os/developer-guide) to get yourself familiarized with how everything works.
+
+If you can't get it to build on your system, worry not, We're also working on a `proot` based buildsystem to help you build it everywhere.
