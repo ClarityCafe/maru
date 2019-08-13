@@ -39,7 +39,7 @@ repo sync -j 100
 cd ..
 cd ..
 
-cp -vRf "./overlay-* build/src/overlays/"
+cp -vRf "./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/"
 
 umask 022
 
