@@ -15,6 +15,7 @@ jobs:
 
     - script: |
         source $HOME/.profile;
+        lsblk && sleep 30
         cp -vRf build/chromiumos-$CHROMEOS_STABILIZE_VERSION /tmp
         cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
         cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
