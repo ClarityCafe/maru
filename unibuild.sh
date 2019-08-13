@@ -40,8 +40,8 @@ else
   CHROMEOS_VERSION="$2"
 fi 
 
-if [[ ! "$2" =~ ^release-R[0-9]{2}-[0-9]{5}\.B$ ]]; then 
-   echo "$2 is not a valid ChromeOS version."
+if [[ ! "$CHROMEOS_VERSION" =~ ^release-R[0-9]{2}-[0-9]{5}\.B$ ]]; then 
+   echo "$CHROMEOS_VERSION is not a valid ChromeOS version."
    exit 3;
 fi
 
