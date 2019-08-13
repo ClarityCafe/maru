@@ -34,16 +34,16 @@ case "$1" in
   ;;
 esac
 
-if [[ ! "$2" =~ ^release-R[0-9]{2}-[0-9]{5}\.B$ ]]; then 
-   echo "$2 is not a valid ChromeOS version."
-   exit 3;
-fi
-
 if [ -z "$2" ]; then
   CHROMEOS_VERSION="release-R76-12239.B"
 else
   CHROMEOS_VERSION="$2"
 fi 
+
+if [[ ! "$2" =~ ^release-R[0-9]{2}-[0-9]{5}\.B$ ]]; then 
+   echo "$2 is not a valid ChromeOS version."
+   exit 3;
+fi
 
 
 if [ "$(uname -m)" != "x86_64" ]; then
