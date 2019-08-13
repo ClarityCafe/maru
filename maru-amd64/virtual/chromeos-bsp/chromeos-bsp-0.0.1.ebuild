@@ -18,6 +18,7 @@ IUSE=""
 
 RDEPEND="
     !chromeos-base/chromeos-bsp-null
+	chromeos-base/maru-oem-wallpapers
     www-plugins/chrome-binary-plugins
 	media-libs/x264
 	net-wireless/broadcom-sta
