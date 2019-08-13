@@ -9,7 +9,7 @@ set -eo pipefail
 
 BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 CHROOT_DIR="$BASE_DIR/chroot"
-
+CHROMEOS_VERSION=
 
 case "$1" in 
   amd64)
@@ -20,8 +20,8 @@ case "$1" in
     BOARD_ARCH="aarch64"
     sleep 2
   ;;
-  --help)
-    echo "$0 < board_arch | --help >"
+  --help | -h)
+    echo "$0 <board_arch|--h(elp)> <cros_version>"
     echo ""
     echo "$0 builds the CrOS image from a maru overlay architecture defined in the first argument."
     echo "This script is created by Kibo Hikari, Licensed under MIT."
@@ -33,6 +33,18 @@ case "$1" in
     exit 1
   ;;
 esac
+
+if [[ ! "$2" =~ ^release-R[0-9]{2}-[0-9]{5}\.B$ ]]; then 
+   echo "$2 is not a valid ChromeOS version."
+   exit 3;
+fi
+
+if [ -z "$2" ]; then
+  CHROMEOS_VERSION="release-R76-12239.B"
+else
+  CHROMEOS_VERSION="$2"
+fi 
+
 
 if [ "$(uname -m)" != "x86_64" ]; then
   echo "Error: Unsupported architecture. Most CrOS build tools were built for x86_64 machines."
@@ -108,7 +120,7 @@ proot_exec git config --global color.ui true
 
 proot_exec cd /mnt/cros && mkdir build && \
   cd build && \
-  repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b release-R76-12239.B && \
+  repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b "$CHROMEOS_VERSION" && \
   repo sync -j 100
 
 proot_exec cd /mnt/cros && cp -vRf overlay-* build/src/overlays/
