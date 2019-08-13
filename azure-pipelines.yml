@@ -15,8 +15,7 @@ jobs:
 
     - script: |
         source $HOME/.profile;
-        sudo mkdir /var/cros/ && sudo chown 1000:1000
-        cp -Rf build/chromiumos-$CHROMEOS_STABILIZE_VERSION /var/cros/
+        cp -Rf build/chromiumos-$CHROMEOS_STABILIZE_VERSION /tmp/
         cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
         cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
       displayName: Setup Board
