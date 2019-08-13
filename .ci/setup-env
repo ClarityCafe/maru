@@ -21,7 +21,7 @@ echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> "$HOME/.profile";
 mkdir -p "build/chromiumos-$CHROMEOS_STABILIZE_VERSION"
 mkdir -p "build/overlays/maru-$BOARD_ARCH"
 
-cp -vRf "maru-$BOARD_ARCH build/overlays/"
+cp -vRf "overlay-maru-$BOARD_ARCH build/overlays/"
 
 echo 'target_os = ["chromeos"]' > "$HOME/.gclient";
 
