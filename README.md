@@ -19,7 +19,15 @@ Maru is a experimental board sr229 to better understand Chromium OS. Right now i
 
 You'll need to grab the entire Chromium OS Source code to build this.
 
-### Fetching `depot_tools` 
+### The Easy way
+
+Run `unibuild.sh` with the architecture of choice. Currently only `amd64` and `aarch64` are supported.
+
+### The Hard way
+
+If that doesn't work, you'll need to read on to build manually:
+
+#### Fetching `depot_tools` 
 
 To be able to pull the entire Chromium OS tree, we'll need to use Google's in-house tools for pulling the entire source.
 
@@ -33,7 +41,7 @@ $ umask 022
 
 ```
 
-### Prepare environment
+#### Prepare environment
 
 let's go ahead and make a `project` folder, it should look like this.
 
@@ -62,7 +70,7 @@ $ repo sync -j8         # Raise this number if you have a fast Internet connecti
 ```
 **Note: This Repository is only built for R74, if you need to build this to R76, then you might need to do some modificiations. We follow ArnoldTheBat upstream.**
 
-### Enabling Google Login
+#### Enabling Google Login
 
 If you want to enable Google login in your build, make sure you have `.googleapikeys` in your `$HOME`. `repo` will know what to do with it.
 
@@ -75,7 +83,7 @@ If you want to enable Google login in your build, make sure you have `.googleapi
 ```
 Finally, head to this [documentation](http://www.chromium.org/developers/how-tos/api-keys) to get an API key.
 
-### Prepare the Overlay
+#### Prepare the Overlay
 
 Finally, you need to copy this repo to `src/overlays` after cloning inside `project/overlays`.
 
@@ -87,7 +95,7 @@ $ cd /project/chromiumos-R74/src/overlays
 $ cp -vRf /project/overlays/maru/* .
 ```
 
-### Build the image
+#### Build the image
 
 Once that's all done, all that its left to do is run a this and wait.
 
@@ -112,5 +120,3 @@ Once the image finishes writing to a USB, boot it to your PC, and cross your fin
 ## Contributing
 
 Please read the [Chromium OS Developer Guide](http://www.chromium.org/chromium-os/developer-guide) to get yourself familiarized with how everything works.
-
-If you can't get it to build on your system, worry not, We're also working on a `proot` based buildsystem to help you build it everywhere.
