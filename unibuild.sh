@@ -10,6 +10,7 @@ set -eo pipefail
 BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 CHROOT_DIR="$BASE_DIR/chroot"
 CHROMEOS_VERSION=
+BOARD_ARCH=
 
 case "$1" in 
   amd64)
@@ -21,7 +22,7 @@ case "$1" in
     sleep 2
   ;;
   --help | -h)
-    echo "$0 <board_arch|--h(elp)> <cros_version>"
+    echo "$0 <board_arch|[-h][--help]> <cros_version>"
     echo ""
     echo "$0 builds the CrOS image from a maru overlay architecture defined in the first argument."
     echo "This script is created by Kibo Hikari, Licensed under MIT."
