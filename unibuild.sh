@@ -81,7 +81,7 @@ fi
 echo "Setting up environment. Please be patient."
 sleep 2
 
-if [ ! -d "$CHROOT_DIR" ];
+if [ ! -d "$CHROOT_DIR" ]; then
   mkdir "$CHROOT_DIR"
   # TODO: Figure out the non-PH mirror link to Ubuntu sources.
   sudo debootstrap --arch amd64 xenial "$CHROOT_DIR" http://mirror.rise.ph/ubuntu/

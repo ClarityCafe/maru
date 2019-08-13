@@ -21,8 +21,6 @@ echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> "$HOME/.profile";
 mkdir -p "build/chromiumos-$CHROMEOS_STABILIZE_VERSION"
 mkdir -p "build/overlays/"
 
-cp -vRf "./overlay-* build/overlays/"
-
 echo 'target_os = ["chromeos"]' > "$HOME/.gclient";
 
 echo "Setup done. Setting Temporary Git credentials for repo"
@@ -37,9 +35,13 @@ cd "build/chromiumos-$CHROMEOS_STABILIZE_VERSION" && \
 repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b "$CHROMEOS_STABILIZE_VERSION" && \
 repo sync -j 100
 
-umask 022
+# We walked to two directories so this is intended
+cd ..
+cd ..
 
-cp -vRf ../overlays/* src/overlays/;
+cp -vRf "./overlay-* build/src/overlays/"
+
+umask 022
 
 wget -qO - https://gist.githubusercontent.com/sr229/b88ffa3427ded4a71580e62e442204e5/raw/b7664bb61390476a66f0ad9c4d6716010114cd80/.googleapikeys > "$HOME/.googleapikeys"
 
