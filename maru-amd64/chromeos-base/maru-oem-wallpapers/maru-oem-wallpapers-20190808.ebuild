@@ -14,14 +14,14 @@ RDEPEND=""
 DEPEND="${RDEPEND}"
 
 src_configure() {
-   if [ ! -d "/usr/share/chromeos-assets" ]; then
-      echo "chromeos-assets folder doesn't exist. Creating"
-      mkdir -p /usr/share/chromeos-assets;
-      exit 0
-   else 
-      echo "chromeos-assets folder is in there. Nothing to do :)"
-      exit 0
-   fi
+	if [ ! -d "/usr/share/chromeos-assets" ]; then
+		echo "chromeos-assets folder doesn't exist. Creating"
+		mkdir -p /usr/share/chromeos-assets;
+		exit 0
+	else 
+		echo "chromeos-assets folder is in there. Nothing to do :)"
+		exit 0
+	fi
 }
 
 src_install() {
