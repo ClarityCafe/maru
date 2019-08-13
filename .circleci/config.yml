@@ -19,7 +19,7 @@ jobs:
           command: |
             source $HOME/.profile;
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
+            cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
       - run:
           name: CROS_SDK - Build Kernel
           command: |
