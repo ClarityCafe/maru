@@ -20,8 +20,16 @@ case "$1" in
     BOARD_ARCH="aarch64"
     sleep 2
   ;;
+  --help)
+    echo "$0 < board_arch | --help >"
+    echo ""
+    echo "$0 builds the CrOS image from a maru overlay architecture defined in the first argument."
+    echo "This script is created by Kibo Hikari, Licensed under MIT."
+    exit 0;
+   ;;
   *)
     echo "Invalid arch $1. Either its not supported yet or its not coded in $0 at the moment."
+    echo "Run --help for more info."
     exit 1
   ;;
 esac
