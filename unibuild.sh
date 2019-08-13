@@ -108,7 +108,7 @@ proot_exec git config --global color.ui true
 
 proot_exec cd /mnt/cros && mkdir build && \
   cd build && \
-  repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b "$CHROMEOS_STABILIZE_VERSION" && \
+  repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b release-R76-12239.B && \
   repo sync -j 100
 
 proot_exec cd /mnt/cros && cp -vRf overlay-* build/src/overlays/

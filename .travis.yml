@@ -6,7 +6,7 @@ matrix:
      - language: generic
        dist: xenial
        env:
-         - BOARD_ARCH=amd64 CHROMEOS_STABILIZE_VERSION=release-R75-12105.B
+         - BOARD_ARCH=amd64 CHROMEOS_STABILIZE_VERSION=release-R76-12105.B
        install:
          - travis_wait 120 ./.ci/setup-env
          - source $HOME/.profile

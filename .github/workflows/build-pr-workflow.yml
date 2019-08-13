@@ -6,7 +6,7 @@ jobs:
     name: Build - amd64 Overlay
     runs-on: ubuntu-16.04
     env:
-      chromeos_stabilize_version: release-R75-12105.B
+      chromeos_stabilize_version: release-R76-12105.B
       board_arch: amd64
     steps:
       - uses: actions/checkout@v1
