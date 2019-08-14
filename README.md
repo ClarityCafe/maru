@@ -1,6 +1,10 @@
 # Project Maru [![CircleCI](https://circleci.com/gh/ClarityCafe/maru.svg?style=svg)](https://circleci.com/gh/ClarityCafe/maru)
 
-Maru is a experimental board sr229 to better understand Chromium OS. Right now its primary aim is to be built and ultimately, support a wide range of hardware, ala-CloudReady.
+Maru is a experimental board sr229 made to better understand Chromium OS. Right now its primary aim is to be built and ultimately, support a wide range of hardware, ala-CloudReady.
+
+## The name
+
+The name "Maru" is from Hanamaru Kunikida of Love Live Sunshine.
 
 ## Roadmap
 
