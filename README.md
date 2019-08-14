@@ -72,7 +72,6 @@ $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-
 $ repo sync -j8         # Raise this number if you have a fast Internet connection
 
 ```
-**Note: This Repository is only built for R74, if you need to build this to R76, then you might need to do some modificiations. We follow ArnoldTheBat upstream.**
 
 #### Enabling Google Login
 
