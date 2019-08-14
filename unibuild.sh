@@ -68,6 +68,8 @@ if [ -z "$(command -v git)" ]; then
 fi
 
 proot_exec() {
+    # HACK: workaround for seccomp bug for non-Debian release proot packages
+    PROOT_NO_SECCOMP=1 \
     proot -S "$CHROOT_DIR" -0 /usr/bin/env -i HOME=/root TERM="xterm-256color" PATH='PATH=/bin:/usr/bin:/sbin:/usr/sbin:/bin:/usr/local/repo' /bin/bash -c "$@" | while read -r line; do
      echo "[CHROOT] $line"
     done
