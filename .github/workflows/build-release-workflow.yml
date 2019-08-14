@@ -15,7 +15,7 @@ jobs:
         run: .ci/setup-env
 
       - name: Build Image
-        run: .ci/build
+        run: cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/ && .ci/build
 
       # TODO: upload git artifact to Git tag.
       - name: Prepare Image for deployment

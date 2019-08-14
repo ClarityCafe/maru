@@ -19,7 +19,6 @@ export PATH="/usr/local/repo/depot_tools:$PATH"
 echo 'export PATH=/usr/local/repo/depot_tools:$PATH' >> "$HOME/.profile";
 
 mkdir -p "build/chromiumos-$CHROMEOS_STABILIZE_VERSION"
-mkdir -p "build/overlays/"
 
 echo 'target_os = ["chromeos"]' > "$HOME/.gclient";
 
@@ -35,11 +34,6 @@ cd "build/chromiumos-$CHROMEOS_STABILIZE_VERSION" && \
 repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b "$CHROMEOS_STABILIZE_VERSION" && \
 repo sync -j 100
 
-# We walked to two directories so this is intended
-cd ..
-cd ..
-
-cp -vRf "./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/"
 
 umask 022
 

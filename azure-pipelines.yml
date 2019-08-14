@@ -15,6 +15,8 @@ jobs:
 
     - script: |
         source $HOME/.profile;
+        cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
+        echo "Copying the project to /tmp, please be patient"
         cp -Rf build/chromiumos-$CHROMEOS_STABILIZE_VERSION /tmp/
         cd /tmp/chromiumos-$CHROMEOS_STABILIZE_VERSION;
         cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;

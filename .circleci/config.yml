@@ -57,6 +57,7 @@ jobs:
           name: CROS_SDK -  Walk to CrOS directory and Setup Board
           command: |
             source $HOME/.profile;
+            cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
             cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
       - run:
