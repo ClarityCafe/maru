@@ -43,6 +43,8 @@ fi
 
 if [[ ! "$CHROMEOS_VERSION" =~ ^release-R[0-9]{2}-[0-9]{5}\.B$ ]]; then 
    echo "$CHROMEOS_VERSION is not a valid ChromeOS version."
+   echo "CrOS versions look like this : release-R[chromium_version]-[cros_build].B"
+   echo "eg. release-R76-12239.B. For reference, go to https://cros-updates-serving.appspot.com"
    exit 3;
 fi
 
