@@ -134,5 +134,5 @@ proot_exec cd /mnt/cros/build && cros_sdk --download -- setup_board --board=maru
 proot_exec cd /mnt/cros/build && cros_sdk -- ./build_packages --nowithdebug --board=maru-"$BOARD_ARCH";
 proot_exec cd /mnt/cros/build && cros_sdk -- ./build_image --board=maru-"$BOARD_ARCH" base;
 
-echo "Image has been built. Check $BASE_DIR/src/images/maru-$1."
+echo "Image has been built. Check $BASE_DIR/src/images/maru-$CHROMEOS_VERSION."
 exit 0
