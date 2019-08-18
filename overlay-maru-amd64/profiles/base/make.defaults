@@ -25,7 +25,7 @@ USE="${USE} legacy_keyboard legacy_power_button sse kernel-4_19"
 
 USE="${USE} direncryption"
 
-USE="${USE} selinux"
+# USE="${USE} selinux"
 
 # Enable all optional features on generic overlays.
 USE="${USE} buffet -wifi_bootstrapping"
