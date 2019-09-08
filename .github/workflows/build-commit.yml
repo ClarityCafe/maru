@@ -8,14 +8,17 @@ jobs:
   build:
     name: Build - amd64 Overlay
     runs-on: ubuntu-16.04
-    env:
-      chromeos_stabilize_version: release-R76-12239.B
-      board_arch: amd64
     steps:
       - uses: actions/checkout@v1
 
       - name: Setup Environment
         run: .ci/setup-env
+        env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64
 
       - name: Build Image
         run: cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/ && .ci/build
+        env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64
