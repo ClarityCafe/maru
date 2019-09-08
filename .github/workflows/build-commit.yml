@@ -1,7 +1,9 @@
 name: Build - Commit
-on: 
-  - push
-
+on:
+  push:
+    branches:    
+      - master
+      - '*/*' 
 jobs:
   build:
     name: Build - amd64 Overlay
