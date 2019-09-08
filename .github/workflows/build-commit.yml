@@ -1,8 +1,6 @@
 name: Build - Commit
 on: 
-  push:
-    branches:
-       - *
+  - push
 
 jobs:
   build:
