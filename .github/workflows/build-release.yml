@@ -1,0 +1,46 @@
+name: Build - Release
+on:
+  push:
+    tags:
+      - 'release-R*'
+      
+jobs:
+  build:
+    name: Build - amd64 Overlay
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup Environment
+        run: .ci/setup-env
+        env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64
+
+      - name: Setup Board
+        run: |
+           source $HOME/.profile
+           cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
+           cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
+           cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH
+        env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64
+           
+      - name: Build Platform Packages
+        run: |
+           source $HOME/.profile
+           cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
+           cros_sdk --download -- ./build_platform_packages --board=maru-$BOARD_ARCH
+        env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64
+           
+      - name: Build Image
+        run: |
+           source $HOME/.profile
+           cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
+           cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH
+        env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64   
