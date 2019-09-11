@@ -27,11 +27,11 @@ jobs:
            CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
            BOARD_ARCH: amd64
            
-      - name: Build Platform Packages
+      - name: Build Packages
         run: |
            source $HOME/.profile
            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
-           cros_sdk --download -- ./build_platform_packages.sh --board=maru-$BOARD_ARCH
+           cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH
         env:
            CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
            BOARD_ARCH: amd64
