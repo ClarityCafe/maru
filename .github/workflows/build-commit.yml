@@ -1,8 +1,5 @@
 name: Build - Commit
-on:
-  push:
-    tags:
-      - '*'
+on: [push, pull_request]
 jobs:
   preload:
      name: 'Preload Board Setup'
