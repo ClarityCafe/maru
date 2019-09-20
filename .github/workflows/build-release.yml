@@ -23,8 +23,15 @@ jobs:
            cd build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/
            cros_sdk --download -- setup_board --board=maru-${BOARD_ARCH}
          env:
+           CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+           BOARD_ARCH: amd64
+
+       - name: Workaround Permissions for chroots
+         run: sudo chown -R $(id -u):0 build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/chroot/
+         env:
             CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
             BOARD_ARCH: amd64
+
        - uses: actions/upload-artifact@master
          with:
            name: cros-build-data
@@ -65,7 +72,7 @@ jobs:
           name: cros-to-finalize
 
       - name: Setup Environment
-        run: wget -qO - https://git.io/Je3Q6 | sh
+        run: wget -qO - https://git.io/Je3Q` | sh
       
       - name: Build Image
         run: |

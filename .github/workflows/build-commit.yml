@@ -22,6 +22,13 @@ jobs:
          env:
             CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
             BOARD_ARCH: amd64
+            
+       - name: Workaround Permissions for chroots
+         run: sudo chown -R $(id -u):0 build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/chroot/
+         env:
+            CHROMEOS_STABILIZE_VERSION: release-R76-12239.B
+            BOARD_ARCH: amd64
+
        - uses: actions/upload-artifact@master
          with:
            name: cros-build-data
