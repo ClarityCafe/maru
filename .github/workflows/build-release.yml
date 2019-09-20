@@ -32,6 +32,7 @@ jobs:
   build:
     name: Build (AMD64)
     needs: preload
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@master
         with:
@@ -57,6 +58,7 @@ jobs:
   finalize:
     name: Finalize (AMD64)
     needs: build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@master
         with:
