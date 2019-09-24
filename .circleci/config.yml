@@ -7,7 +7,7 @@ jobs:
   prebuild_amd64:
     machine: 
       image: ubuntu-1604:201903-01
-    env:
+    environment:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
@@ -32,14 +32,14 @@ jobs:
   packagebuild_amd64:
     machine: 
       image: ubuntu-1604:201903-01
-    env:
+    environment:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
           at: /home/circleci/project/build
       - run:
-         name: Setup Environment
+         name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
           name: CROS_SDK -  Build Packages
@@ -54,18 +54,18 @@ jobs:
           root: /home/circleci/project
           paths:
             - build
-            
+
   postbuild_amd64:
     machine: 
       image: ubuntu-1604:201903-01
-    env:
+    environment:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
           at: /home/circleci/project/build
       - run:
-         name: Setup Environment
+         name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
           name: CROS_SDK -  Build Image
@@ -84,14 +84,14 @@ jobs:
   nightly_deploy_amd64:
     machine: 
       image: ubuntu-1604:201903-01 
-    env:
+    environment:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
           at: /home/circleci/project/build
       - run:
-         name: Setup Environment
+         name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
           name: Package Image for distribution
@@ -105,14 +105,14 @@ jobs:
     machine: 
       image: ubuntu-1604:201903-01
     working_directory: /tmp 
-    env:
+    environment:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
           at: /home/circleci/project/build
       - run:
-         name: Setup Environment
+         name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
           name: Package Image for distribution
