@@ -20,53 +20,50 @@ jobs:
           command: |
             source $HOME/.profile;
             cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
-            mkdir /tmp/crosbuild && cp -vRf build/chromiumos-$CHROMEOS_STABILIZE_VERSION/* /tmp/crosbuild
-            cd /tmp/crosbuild
             cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
       - run:
           name: Prepare passing to downstream
-          command: chown -R $(id -u):0 /tmp/crosbuild/chroot
+          command: chown -R $(id -u):0 /home/circleci/project/build/chroot
       - persist_to_workspace:
-          root: /tmp
+          root: /home/circleci/project
           paths:
-            - crosbuild
+            - build
 
   packagebuild_amd64:
     machine: 
       image: ubuntu-1604:201903-01
-    working_directory: /tmp 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /tmp/crosbuild
+          at: /home/circleci/project/build
       - run:
          name: Setup Environment
          command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
-          name: CROS_SDK -  Build Image
+          name: CROS_SDK -  Build Packages
           command: |
             source $HOME/.profile;
+            cd build/chromiumos-*
             cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH;
       - run:
           name: Prepare passing to downstream
-          command: chown -R $(id -u):0 /tmp/crosbuild/chroot
+          command: chown -R $(id -u):0 /home/circleci/project/build/chromiumos-*/chroot/
       - persist_to_workspace:
-          root: /tmp
+          root: /home/circleci/project
           paths:
-            - crosbuild
-
+            - build
+            
   postbuild_amd64:
     machine: 
       image: ubuntu-1604:201903-01
-    working_directory: /tmp 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /tmp/crosbuild
+          at: /home/circleci/project/build
       - run:
          name: Setup Environment
          command: wget -qO - https://git.io/Je3Q6 | sh
@@ -74,25 +71,25 @@ jobs:
           name: CROS_SDK -  Build Image
           command: |
             source $HOME/.profile;
+            cd build/chromiumos-*
             cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH;
       - run:
           name: Prepare passing to downstream
-          command: chown -R $(id -u):0 /tmp/crosbuild/chroot
+          command: chown -R $(id -u):0 /home/circleci/project/build/chromiumos-*/chroot/
       - persist_to_workspace:
-          root: /tmp
+          root: /home/circleci/project
           paths:
-            - crosbuild
+            - build
 
   nightly_deploy_amd64:
     machine: 
-      image: ubuntu-1604:201903-01
-    working_directory: /tmp 
+      image: ubuntu-1604:201903-01 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /tmp/crosbuild
+          at: /home/circleci/project/build
       - run:
          name: Setup Environment
          command: wget -qO - https://git.io/Je3Q6 | sh
@@ -100,9 +97,9 @@ jobs:
           name: Package Image for distribution
           command: |
             source $HOME/.profile;
-            tar -czvf $HOME/maru-image.tgz crosbuild/src/build/images/maru-$BOARD_ARCH
+            tar -czvf $HOME/maru-image-amd64-nightly.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
       - store_artifacts:
-          path: /home/circleci/maru-image-nightly.tgz
+          path: /home/circleci/maru-image-amd64-nightly.tgz
 
   deploy_amd64:
     machine: 
@@ -113,7 +110,7 @@ jobs:
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /tmp/crosbuild
+          at: /home/circleci/project/build
       - run:
          name: Setup Environment
          command: wget -qO - https://git.io/Je3Q6 | sh
@@ -121,7 +118,7 @@ jobs:
           name: Package Image for distribution
           command: |
             source $HOME/.profile;
-            tar -czvf $HOME/maru-image.tgz crosbuild/src/build/images/maru-$BOARD_ARCH
+            tar -czvf $HOME/maru-image.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
 
 workflows:
   version: 2
