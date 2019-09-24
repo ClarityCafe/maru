@@ -5,7 +5,8 @@ notify:
 
 jobs:
   prebuild_amd64:
-    machine: true
+    machine: 
+      image: ubuntu-1604:201903-01
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
@@ -31,7 +32,8 @@ jobs:
             - crosbuild
 
   packagebuild_amd64:
-    machine: true
+    machine: 
+      image: ubuntu-1604:201903-01
     working_directory: /tmp 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
@@ -56,7 +58,8 @@ jobs:
             - crosbuild
 
   postbuild_amd64:
-    machine: true
+    machine: 
+      image: ubuntu-1604:201903-01
     working_directory: /tmp 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
@@ -79,8 +82,10 @@ jobs:
           root: /tmp
           paths:
             - crosbuild
+
   nightly_deploy_amd64:
-    machine: true
+    machine: 
+      image: ubuntu-1604:201903-01
     working_directory: /tmp 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
@@ -96,9 +101,12 @@ jobs:
           command: |
             source $HOME/.profile;
             tar -czvf $HOME/maru-image.tgz crosbuild/src/build/images/maru-$BOARD_ARCH
+      - store_artifacts:
+          path: /home/circleci/maru-image-nightly.tgz
 
   deploy_amd64:
-    machine: true
+    machine: 
+      image: ubuntu-1604:201903-01
     working_directory: /tmp 
     env:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
@@ -122,7 +130,7 @@ workflows:
       - prebuild_amd64
       - packagebuild_amd64:
           requires: 
-            - 'prebuild-amd64'
+            - 'prebuild_amd64'
       - postbuild_amd64:
           requires:
             - 'packagebuild_amd64'
@@ -132,16 +140,33 @@ workflows:
 
   tagged-build:
     jobs:
-      - prebuild_amd64
+      - prebuild_amd64:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /release-R[0-9]{2}-[0-9]{5}\.B/
+
       - packagebuild_amd64:
           requires: 
-            - 'prebuild-amd64'
+            - 'prebuild_amd64'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /release-R[0-9]{2}-[0-9]{5}\.B/
       - postbuild_amd64:
           requires:
             - 'packagebuild_amd64'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /release-R[0-9]{2}-[0-9]{5}\.B/
+
       - deploy_amd64:
           requires: 
-            - 'postbuild-amd64'
+            - 'postbuild_amd64'
           filters:
             branches:
               ignore: /.*/
