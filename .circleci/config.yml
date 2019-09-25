@@ -18,8 +18,9 @@ jobs:
       - run:
           name: CROS_SDK -  Walk to CrOS directory and Setup Board
           command: |
-            source $HOME/.profile;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
             cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION
             cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
       - run:
           name: Prepare passing to downstream
@@ -44,7 +45,7 @@ jobs:
       - run:
           name: CROS_SDK -  Build Packages
           command: |
-            source $HOME/.profile;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
             cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH;
       - run:
@@ -70,7 +71,7 @@ jobs:
       - run:
           name: CROS_SDK -  Build Image
           command: |
-            source $HOME/.profile;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
             cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH;
       - run:
@@ -96,7 +97,7 @@ jobs:
       - run:
           name: Package Image for distribution
           command: |
-            source $HOME/.profile;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
             tar -czvf $HOME/maru-image-amd64-nightly.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
       - store_artifacts:
           path: /home/circleci/maru-image-amd64-nightly.tgz
@@ -117,7 +118,7 @@ jobs:
       - run:
           name: Package Image for distribution
           command: |
-            source $HOME/.profile;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
             tar -czvf $HOME/maru-image.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
 
 workflows:
