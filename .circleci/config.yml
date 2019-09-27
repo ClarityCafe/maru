@@ -22,9 +22,6 @@ jobs:
             cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION
             cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
-      - run:
-          name: Prepare passing to downstream
-          command: chown -R circleci:root /home/circleci/project/build/chromiumos-*/chroot
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -48,9 +45,6 @@ jobs:
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
             cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH;
-      - run:
-          name: Prepare passing to downstream
-          command: sudo sudo chown -R circleci:root /home/circleci/project/build/chromiumos-*/chroot/
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -74,9 +68,6 @@ jobs:
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
             cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH;
-      - run:
-          name: Prepare passing to downstream
-          command: sudo chown -R circleci:root /home/circleci/project/build/chromiumos-*/chroot/
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -105,7 +96,6 @@ jobs:
   deploy_amd64:
     machine: 
       image: ubuntu-1604:201903-01
-    working_directory: /tmp 
     environment:
       CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
