@@ -24,7 +24,7 @@ jobs:
             cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
       - run:
           name: Prepare passing to downstream
-          command: chown -R $(id -u):0 /home/circleci/project/build/chroot
+          command: chown -R $(id -u):0 /home/circleci/project/build/chromiumos-*/chroot
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
