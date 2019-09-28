@@ -50,6 +50,11 @@ jobs:
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
             cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH;
+      - run:
+          name: Prepare passing to downstream
+          command: |
+              sudo chmod a+x ./build/chromiumos-*/chroot
+              sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -73,6 +78,11 @@ jobs:
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
             cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH;
+      - run:
+          name: Prepare passing to downstream
+          command: |
+              sudo chmod a+x ./build/chromiumos-*/chroot
+              sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
