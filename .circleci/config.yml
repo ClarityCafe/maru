@@ -22,6 +22,11 @@ jobs:
             cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION
             cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
+      - run:
+          name: Prepare passing to downstream
+          command: |
+              sudo chmod a+x ./build/chromiumos-*/chroot
+              sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
