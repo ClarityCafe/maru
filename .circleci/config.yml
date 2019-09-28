@@ -21,7 +21,7 @@ jobs:
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION
-            cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
+            cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH && exit;
       - run:
           name: Prepare passing to downstream
           command: |
@@ -49,7 +49,7 @@ jobs:
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
-            cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH;
+            cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH && exit;
       - run:
           name: Prepare passing to downstream
           command: |
@@ -77,7 +77,7 @@ jobs:
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-*
-            cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH;
+            cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH && exit;
       - run:
           name: Prepare passing to downstream
           command: |
