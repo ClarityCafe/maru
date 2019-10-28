@@ -4,164 +4,174 @@ notify:
     - url: https://circledisc-clarity.herokuapp.com/webhook/circle
 
 jobs:
-  build_amd64:
-    machine: true
+  prebuild_amd64:
+    machine: 
+      image: ubuntu-1604:201903-01
     environment:
+      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
-      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B
     steps:
-      - checkout
+      - checkout 
       - run:
-          name: Setup Environment
-          command: .ci/setup-env         
+         name: Checkout Chromium OS Source code
+         command: .ci/setup-env
       - run:
           name: CROS_SDK -  Walk to CrOS directory and Setup Board
           command: |
-            source $HOME/.profile;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
             cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH;
-          timeout: 1200
-          no_output_timeout: 20h
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION
+            cros_sdk --download -- setup_board --board=maru-$BOARD_ARCH && exit;
       - run:
-          name: CROS_SDK - Build Platform Packages
+          name: Prepare passing to downstream
           command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./build_platform_packages.sh --board=maru-$BOARD_ARCH;
-          timeout: 1200
-          no_output_timeout: 20h
-      - run:
-          name: CROS_SDK - Build Image
-          command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+              sudo chmod a+x ./build/chromiumos-*/chroot
+              sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - build
 
-  build_aarch64:
-    machine: true
+  packagebuild_amd64:
+    machine: 
+      image: ubuntu-1604:201903-01
     environment:
-      BOARD_ARCH: aarch64
-      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B
+      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
+      BOARD_ARCH: amd64
     steps:
-      - checkout
+      - attach_workspace:
+          at: /home/circleci/project/build
       - run:
-          name: Setup Environment
-          command: .ci/setup-env         
+         name: Setup environment
+         command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
-          name: CROS_SDK -  Walk to CrOS directory and Setup Board
+          name: CROS_SDK -  Build Packages
           command: |
-            source $HOME/.profile;
-            cp -vRf ./overlay-* build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/overlays/
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
+            cd build/chromiumos-*
+            cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH && exit;
       - run:
-          name: CROS_SDK - Build Packages
+          name: Prepare passing to downstream
           command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
-          timeout: 1200
-          no_output_timeout: 20h
+              sudo chmod a+x ./build/chromiumos-*/chroot
+              sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - build
+
+  postbuild_amd64:
+    machine: 
+      image: ubuntu-1604:201903-01
+    environment:
+      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
+      BOARD_ARCH: amd64
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/build
       - run:
-          name: CROS_SDK - Build Image
+         name: Setup environment
+         command: wget -qO - https://git.io/Je3Q6 | sh
+      - run:
+          name: CROS_SDK -  Build Image
           command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
+            export PATH=/usr/local/repo/depot_tools:$PATH;
+            cd build/chromiumos-*
+            cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH && exit;
+      - run:
+          name: Prepare passing to downstream
+          command: |
+              sudo chmod a+x ./build/chromiumos-*/chroot
+              sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - build
+
+  nightly_deploy_amd64:
+    machine: 
+      image: ubuntu-1604:201903-01 
+    environment:
+      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
+      BOARD_ARCH: amd64
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/build
+      - run:
+         name: Setup environment
+         command: wget -qO - https://git.io/Je3Q6 | sh
+      - run:
+          name: Package Image for distribution
+          command: |
+            export PATH=/usr/local/repo/depot_tools:$PATH;
+            tar -czvf $HOME/maru-image-amd64-nightly.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
+      - store_artifacts:
+          path: /home/circleci/maru-image-amd64-nightly.tgz
 
   deploy_amd64:
-    machine: true
+    machine: 
+      image: ubuntu-1604:201903-01
     environment:
+      CHROMEOS_STABILIZE_VERSION: release-R75-12105.B 
       BOARD_ARCH: amd64
-      CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
     steps:
-      - checkout
+      - attach_workspace:
+          at: /home/circleci/project/build
       - run:
-          name: Setup Environment
-          command: .ci/setup-env         
+         name: Setup environment
+         command: wget -qO - https://git.io/Je3Q6 | sh
       - run:
-          name: CROS_SDK - Setup Board
+          name: Package Image for distribution
           command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
-      - run:
-          name: CROS_SDK - Build Packages
-          command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
-          timeout: 1200
-          no_output_timeout: 20h
-      - run:
-          name: CROS_SDK - Build Image
-          command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk -- ./build_image --board=maru-$BOARD_ARCH;
-      - run:
-          name: Publish to GitHub
-          command: |
-            go get github.com/tcnksm/ghr
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace ${CHROMEOS_STABILIZE_VERSION} build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/src/build/images/maru-${BOARD_ARCH}/    
-
-  deploy_aarch64:
-    machine: true
-    environment:
-      BOARD_ARCH: aarch64
-      CHROMEOS_STABILIZE_VERSION: release-R74-11895.B
-    steps:
-      - checkout
-      - run:
-          name: Setup Environment
-          command: .ci/setup-env         
-      - run:
-          name: CROS_SDK - Setup Board
-          command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./setup_board --board=maru-$BOARD_ARCH;
-      - run:
-          name: CROS_SDK - Build Packages
-          command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --download -- ./build_packages --nowithdebug --board=maru-$BOARD_ARCH;
-          timeout: 1200
-          no_output_timeout: 20h
-      - run:
-          name: CROS_SDK - Build Image
-          command: |
-            source $HOME/.profile;
-            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION;
-            cros_sdk --downlaod -- ./build_image --board=maru-$BOARD_ARCH;
-      - run:
-          name: Publish to GitHub
-          command: |
-            go get github.com/tcnksm/ghr
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace ${CHROMEOS_STABILIZE_VERSION} build/chromiumos-${CHROMEOS_STABILIZE_VERSION}/src/build/images/maru-${BOARD_ARCH}/    
-
-
+            export PATH=/usr/local/repo/depot_tools:$PATH;
+            tar -czvf $HOME/maru-image.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
 
 workflows:
   version: 2
   untagged-build:
     jobs:
-      - build_amd64
-#      - build_aarch64
+      - prebuild_amd64
+      - packagebuild_amd64:
+          requires: 
+            - 'prebuild_amd64'
+      - postbuild_amd64:
+          requires:
+            - 'packagebuild_amd64'
+      - nightly_deploy_amd64:
+          requires:
+            - 'postbuild_amd64'
+
   tagged-build:
     jobs:
-      - deploy_amd64:
+      - prebuild_amd64:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /release-R[0-9]{2}-[0-9]{5}\.B/
-# ----  Disabled AARCH64 deploys, AARCH64 is experimental! --- #
-#      - deploy_aarch64:
-#          filters:
-#            branches:
-#              ignore: /.*/
-#            tags:
-#              only: /release-R[0-9]{2}-[0-9]{5}\.B/
+
+      - packagebuild_amd64:
+          requires: 
+            - 'prebuild_amd64'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /release-R[0-9]{2}-[0-9]{5}\.B/
+      - postbuild_amd64:
+          requires:
+            - 'packagebuild_amd64'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /release-R[0-9]{2}-[0-9]{5}\.B/
+
+      - deploy_amd64:
+          requires: 
+            - 'postbuild_amd64'
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /release-R[0-9]{2}-[0-9]{5}\.B/
