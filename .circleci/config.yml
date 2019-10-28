@@ -53,8 +53,10 @@ jobs:
       - run:
           name: Prepare passing to downstream
           command: |
+              export PATH=/usr/local/repo/depot_tools:$PATH;
               sudo chmod a+x ./build/chromiumos-*/chroot
               sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
+              cros_sdk --delete;
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -81,8 +83,10 @@ jobs:
       - run:
           name: Prepare passing to downstream
           command: |
+              export PATH=/usr/local/repo/depot_tools:$PATH;
               sudo chmod a+x ./build/chromiumos-*/chroot
               sudo chown -R $(id -u):0 ./build/chromiumos-*/chroot
+              cros_sdk --delete
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
