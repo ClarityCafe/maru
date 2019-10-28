@@ -56,6 +56,9 @@ USE="${USE} include_vmlinuz"
 # unified builds.
 USE="${USE} -unibuild"
 
+# Disable download cros-debug packages according to Mike Frysinger
+USE="${USE} -cros_debug"
+
 # Enable a few more video cards as this is a generic board.
 VIDEO_CARDS="intel llvmpipe nouveau radeon"
 
