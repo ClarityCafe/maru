@@ -51,7 +51,7 @@ jobs:
           name: CROS_SDK -  Build Packages
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
-            cd build/chromiumos-*
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
             cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH && exit;
       - run:
           name: Prepare passing to downstream
@@ -82,7 +82,7 @@ jobs:
           name: CROS_SDK -  Build Image
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
-            cd build/chromiumos-*
+            cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
             cros_sdk --download -- ./build_image --board=maru-$BOARD_ARCH && exit;
       - run:
           name: Prepare passing to downstream
@@ -113,7 +113,7 @@ jobs:
           name: Package Image for distribution
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
-            tar -czvf $HOME/maru-image-amd64-nightly.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
+            tar -czvf $HOME/maru-image-amd64-nightly.tgz build/chromiumos-$CHROMEOS_STABILIZE_VERSION//src/build/images/maru-$BOARD_ARCH
       - store_artifacts:
           path: /home/circleci/maru-image-amd64-nightly.tgz
 
@@ -133,7 +133,7 @@ jobs:
           name: Package Image for distribution
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
-            tar -czvf $HOME/maru-image.tgz build/chromiumos-*/src/build/images/maru-$BOARD_ARCH
+            tar -czvf $HOME/maru-image.tgz build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/build/images/maru-$BOARD_ARCH
 
 workflows:
   version: 2
