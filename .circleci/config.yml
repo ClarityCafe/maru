@@ -43,7 +43,7 @@ jobs:
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /home/circleci/project/build
+          at: /home/circleci/project/
       - run:
          name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
@@ -105,7 +105,7 @@ jobs:
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /home/circleci/project/build
+          at: /home/circleci/project/
       - run:
          name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
@@ -125,7 +125,7 @@ jobs:
       BOARD_ARCH: amd64
     steps:
       - attach_workspace:
-          at: /home/circleci/project/build
+          at: /home/circleci/project/
       - run:
          name: Setup environment
          command: wget -qO - https://git.io/Je3Q6 | sh
