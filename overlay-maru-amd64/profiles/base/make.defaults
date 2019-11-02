@@ -57,10 +57,10 @@ USE="${USE} include_vmlinuz"
 USE="${USE} -unibuild"
 
 # Disable download cros-debug packages according to Mike Frysinger
-USE="${USE} -cros_debug"
+USE="-cros_debug ${USE}"
 
 # Enable a few more video cards as this is a generic board.
 VIDEO_CARDS="intel llvmpipe nouveau radeon"
 
-# Enable Libinput
-INPUT_DEVICES="libinput"
+# TEST: have this enabled along with libinput
+INPUT_DEVICES="keyboard mouse evdev synaptics libinput"
