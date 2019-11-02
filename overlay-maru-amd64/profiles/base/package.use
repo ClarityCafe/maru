@@ -1,1 +1,2 @@
 media-libs/mesa egl gles2 shared-glapi
+sys-apps/gptfdisk -ncurses
