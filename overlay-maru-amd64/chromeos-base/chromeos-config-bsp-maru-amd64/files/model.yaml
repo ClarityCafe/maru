@@ -1,0 +1,26 @@
+shared_config: &shared_config
+  name: "{{$name}}"
+  identity:
+    platform-name: "maru"
+    smbios-name-match: "noseabios"
+    sku-id: "{{$sku-id}}"
+  firmware:
+    image-name: "nofirmware"
+    no-firmware: true
+  wallpaper: "{{$wallpaper}}"
+  arc:
+    build-properties:
+        product: "{{$name}}"
+        oem: "Clarity Operations LLC"
+        marketing-name: "{{$name}}"
+        first-api-level: "28"
+        pai-regions: "*"
+
+chromeos:
+  devices:
+    - $name: "maru"
+      products:
+        - $wallpaper: "oem"
+      skus:
+        - $sku-id: 0
+          config: *shared_config

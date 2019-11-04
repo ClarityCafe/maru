@@ -18,7 +18,7 @@ IUSE=""
 
 RDEPEND="
     !chromeos-base/chromeos-bsp-null
-	chromeos-base/maru-oem-wallpapers
+    chromeos-base/maru-oem-wallpapers
     chromeos-base/auto-expand-partition
     www-plugins/chrome-binary-plugins
 	media-libs/x264
