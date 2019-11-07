@@ -1,3 +1,6 @@
+# Copyright (c) FydeOS
+# Derived from https://github.com/FydeOS/chromium_os_for_raspberry_pi
+
 EAPI=5
 
 DESCRIPTION="Auto expand stateful partition on first boot"
