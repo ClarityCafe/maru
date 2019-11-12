@@ -24,6 +24,15 @@ USE="${USE} legacy_keyboard legacy_power_button sse kernel-4_14"
 
 USE="${USE} direncryption"
 
+# Enable ARC
+USE="${USE} arc-apk-cache arc-adbd arc-appfuse arc-adbd arc-base arc-codec-software arc-common-scripts arc-hardware-features-default"
+
+USE="${USE} arc-kcm arc-keymaster arc-media-profiles-dynamic arc-myfiles arc-networkd arc-obb-mounter arc-removable-media arc-sdcard"
+
+USE="${USE} arc-setup arc-sslh-init arcvm-codec-software arcvm-launch arcvm-vsock-proxy arc-camera-profile arc-camera-service arc-cros-gralloc"
+
+USE="${USE} arc-mesa arc-mesa-img arc-mesa-virgl arc-opengles arcvm-codec arc-media-profiles arcvm-codec arc-codec arc-mesa-virgl"
+
 # Enable all optional features on generic overlays.
 USE="${USE} buffet"
 
