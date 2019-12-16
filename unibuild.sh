@@ -131,7 +131,7 @@ proot_exec cd /mnt/cros && mkdir build && \
 proot_exec cd /mnt/cros && cp -vRf overlay-* build/src/overlays/
 
 proot_exec cd /mnt/cros/build && cros_sdk --download -- setup_board --board=maru-"$BOARD_ARCH";
-proot_exec cd /mnt/cros/build && cros_sdk -- ./build_packages --nowithdebug --board=maru-"$BOARD_ARCH";
+proot_exec cd /mnt/cros/build && cros_sdk -- ./build_packages --withtest --board=maru-"$BOARD_ARCH";
 proot_exec cd /mnt/cros/build && cros_sdk -- ./build_image --board=maru-"$BOARD_ARCH" base;
 
 echo "Image has been built. Check $BASE_DIR/src/images/maru-$CHROMEOS_VERSION."
