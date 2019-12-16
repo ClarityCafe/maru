@@ -24,6 +24,8 @@ USE="${USE} legacy_keyboard legacy_power_button sse kernel-4_14"
 
 USE="${USE} direncryption"
 
+USE="${USE} widevine x264"
+
 # Enable ARC
 USE="${USE} arc-apk-cache arc-adbd arc-appfuse arc-adbd arc-base arc-codec-software arc-common-scripts arc-hardware-features-default"
 
