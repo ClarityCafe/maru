@@ -105,7 +105,7 @@ Once that's all done, all that its left to do is run a this and wait.
 ```
 $ export BOARD=maru-amd64
 $ cros_sdk -- setup_board --board=${BOARD}
-$ cros_sdk -- ./build_packages --nowithdebug --board=${BOARD}
+$ cros_sdk -- ./build_packages --withtest --board=${BOARD}
 $ cros_sdk -- ./build_image --board=${BOARD} base
 
 ```
