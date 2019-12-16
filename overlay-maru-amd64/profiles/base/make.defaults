@@ -40,7 +40,7 @@ USE="${USE} buffet"
 USE="${USE} llvm"
 
 # Add some extra packages
-USE="${USE} chrome_media arc x264 chrome-binary-plugins"
+USE="${USE} chrome_media arc x264 widevine "
 
 # Enable camera HALv3
 USE="${USE} arc-camera3"
