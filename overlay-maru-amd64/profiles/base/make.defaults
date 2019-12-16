@@ -72,4 +72,5 @@ USE="-cros_debug ${USE}"
 VIDEO_CARDS="intel i915 i965 llvmpipe nouveau radeon radeonsi r100 r200 r300 r600 amdgpu vmware"
 
 # TEST: have this enabled along with libinput
-INPUT_DEVICES="keyboard mouse evdev synaptics libinput"
+#INPUT_DEVICES="keyboard mouse evdev synaptics"
+INPUT_DEVICES="libinput"
