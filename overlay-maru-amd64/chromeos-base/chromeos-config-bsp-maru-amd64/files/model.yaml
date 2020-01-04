@@ -1,0 +1,29 @@
+dev-config: &dev_config
+  name: "{{$device-name}}"
+  test-label: "{{$device-name}}"
+  powerd-prefs: "{{$device-name}}"
+  identity: &base_ident
+    # We'll derive from Fizz for now and see what happens...
+    # This is completely untested, and Komachi is not helping me build stuff :(
+    platform-name: "Fizz"
+    smbios-name-match: "Fizz"
+    sku-id: "{{$sku-id}}"
+  firmware:
+    no-firmware: True
+  wallpaper: "{{$wallpaper}}"
+
+wl-dev-config: &wl_dev_config
+  <<: *dev_config
+  identity:
+    <<: *base_ident
+    whitelabel-tag: "{{$whitelabel-tag}}"
+
+chromeos:
+  devices:
+    - $device-name: "komachi"
+      skus:
+        - $sku-id: 0
+          config: *dev_config
+      products:
+        # assuming our buildsystem CWD is somewhere in the project root, let's go to overlays/overlay-maru-amd64
+        $wallpaper: "oem"

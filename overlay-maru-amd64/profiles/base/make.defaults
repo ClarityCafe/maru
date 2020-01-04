@@ -63,7 +63,9 @@ USE="${USE} include_vmlinuz"
 # https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/chromeos-config/README.md
 # for further details about chromeos-config, which is the required entry point for
 # unified builds.
-USE="${USE} -unibuild"
+#
+# Disabled for Unibuild test.
+#USE="${USE} -unibuild"
 
 # Disable download cros-debug packages according to Mike Frysinger
 USE="-cros_debug ${USE}"
