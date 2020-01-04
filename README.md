@@ -1,10 +1,18 @@
-# Project Maru [![CircleCI](https://circleci.com/gh/ClarityCafe/maru.svg?style=svg)](https://circleci.com/gh/ClarityCafe/maru)
+![Maru Logo](https://cloudflare-ipfs.com/ipfs/QmYWGWmauYZk8vBsYhEnqYtZjC41ajv4ojUQH3iSFCa6Mp)
+# Project Maru (Working Title)
 
-Maru is a experimental board sr229 made to better understand Chromium OS. Right now its primary aim is to be built and ultimately, support a wide range of hardware, ala-CloudReady.
+Project Maru is a Chromium OS distribution focusing on upstream support, while providing a secure and solid OS base for everyone, ranging from Linux enthusiasts to developers.
+
+Like Chromium OS, it's straightforward, with an adequate amount of bells and whistles to get you going which is a solid browser experience.
 
 ## The name
 
 The name "Maru" is from Hanamaru Kunikida of Love Live Sunshine.
+
+
+## Disclaimer
+
+We're not associated with [MaruOS](https://maruos.com), and Maru is simply a working title while we're still asking the small community we have which should we name it later on.
 
 ## Roadmap
 
@@ -17,7 +25,9 @@ The name "Maru" is from Hanamaru Kunikida of Love Live Sunshine.
   - This is intended for OTA updates. We want people to use Maru as a simple update.
 
 - [ ] Other architecture support
-  - i386 won't be supported, unfortunately.
+  - [] ARM64
+      - May Range from Raspberry Pi 4, Udoo, etc.
+
 
 ## Building Maru
 
