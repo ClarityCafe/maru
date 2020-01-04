@@ -25,7 +25,7 @@ We're not associated with [MaruOS](https://maruos.com), and Maru is simply a wor
   - This is intended for OTA updates. We want people to use Maru as a simple update.
 
 - [ ] Other architecture support
-  - [] ARM64
+  - [ ] ARM64
       - May Range from Raspberry Pi 4, Udoo, etc.
 
 
