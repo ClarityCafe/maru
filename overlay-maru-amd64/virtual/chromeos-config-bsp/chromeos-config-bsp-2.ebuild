@@ -8,7 +8,7 @@ HOMEPAGE="http://src.chromium.org"
 
 LICENSE="BSD-Google"
 SLOT="0"
-KEYWORDS="-* amd64 x86"
+KEYWORDS="-* amd64"
 
 DEPEND="chromeos-base/chromeos-config-bsp-maru-amd64"
 RDEPEND="${DEPEND}"
