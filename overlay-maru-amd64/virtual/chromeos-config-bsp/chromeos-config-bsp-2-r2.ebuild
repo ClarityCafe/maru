@@ -1,0 +1,1 @@
+chromos-config-bsp-2.ebuild
