@@ -17,11 +17,16 @@ KEYWORDS="*"
 IUSE=""
 
 RDEPEND="
-    !chromeos-base/chromeos-bsp-null
+    chromeos-base/chromeos-bsp-maru-amd64
     chromeos-base/maru-oem-wallpapers
     chromeos-base/auto-expand-partition
     www-plugins/chrome-binary-plugins
 	media-libs/x264
+	!net-wireless/broadcom-sta
+	!net-wireless/rtl8188eu
+	net-wireless/rtl8723au
+	net-wireless/rtl8723bu
+	net-wireless/rtl8812au
    "
 
 DEPEND="${RDEPEND}"
