@@ -45,7 +45,7 @@ If that doesn't work, you'll need to read on to build manually:
 
 To be able to pull the entire Chromium OS tree, we'll need to use Google's in-house tools for pulling the entire source.
 
-```
+```sh
 $ sudo mkdir -p /usr/local/repo
 $ sudo chmod 777 /usr/local/repo
 $ cd /usr/local/repo
@@ -59,7 +59,8 @@ $ umask 022
 
 let's go ahead and make a `project` folder, it should look like this.
 
-```
+```sh
+
 $ mkdir -p $HOME/project/chromiumos-R74      # This is the directory to hold Chromium OS source code, name it according to the release you are going to build.
 $ mkdir -p $HOME/project/overlays            # This is the directory to hold this repository.
 
@@ -68,7 +69,8 @@ Now, we're ready to pull the Chromium OS source code. You will need to authentic
 
 But first we need to know which release you'd like to build via using `git ls-remote`
 
-```
+```sh
+
 $ git ls-remote https://chromium.googlesource.com/a/chromiumos/manifest.git | grep release
 
 ```
@@ -76,9 +78,10 @@ Keep in mind you should be looking for ``release-Rxx-XXXXX.B``, since these are 
 
 When you're done selecting what repo you need to use, go ahead and run the following commands
 
-```
+```sh
+
 $ cd $HOME/project/chromiumos-R74
-$ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b stabilize-10718.88.B  # The last R70 stable release
+$ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git --repo-url https://chromium.googlesource.com/external/repo.git -b release-R80-12739.B
 $ repo sync -j8         # Raise this number if you have a fast Internet connection
 
 ```
@@ -89,7 +92,7 @@ If you want to enable Google login in your build, make sure you have `.googleapi
 
 `.googleapikeys` should look like the following:
 
-```
+```yaml
 'google_api_key': 'your api key',
 'google_default_client_id': 'your client id',
 'google_default_client_secret': 'your client secret',
@@ -100,19 +103,16 @@ Finally, head to this [documentation](http://www.chromium.org/developers/how-tos
 
 Finally, you need to copy this repo to `src/overlays` after cloning inside `project/overlays`.
 
-```
-$ cd /project/overlays
-$ git clone https://github.com/sr229/maru.git
-
-$ cd /project/chromiumos-R74/src/overlays
-$ cp -vRf /project/overlays/maru/* .
+```sh
+$ git clone https://github.com/ClarityCafe/maru.git
+$ cp -vRf ./overlay-maru-amd64 cros-source-clone-folder/src/overlays
 ```
 
 #### Build the image
 
 Once that's all done, all that its left to do is run a this and wait.
 
-```
+```sh
 $ export BOARD=maru-amd64
 $ cros_sdk -- setup_board --board=${BOARD}
 $ cros_sdk -- ./build_packages --withtest --board=${BOARD}
