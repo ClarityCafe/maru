@@ -13,10 +13,10 @@ steps:
 - name: Setup Environment
   commands:
   - CHROMEOS_STABILIZE_VERSION="release-R80-12739.B" ./.ci/setup-env
-  
+
 - name: Build
   commands:
-  - ./.ci/build
+  - BOARD_ARCH="amd64" ./.ci/build
 
 trigger:
  branch:
@@ -39,11 +39,14 @@ steps:
 
 - name: Build
   commands:
-  - ./.ci/build
+  - BOARD_ARCH="amd64" ./.ci/build
 
 - name: Release to GitHub Release
   commands:
-     - ./.ci/release
+     - BOARD_ARCH="amd64" bash ./.ci/release
+  environment:
+    GITHUB_TOKEN:
+       from_secret: github_token
   when:
     event:
       - tag

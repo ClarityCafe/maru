@@ -1,0 +1,15 @@
+#!/bin/sh
+
+
+mkdir release-$CHROMEOS_STABILIZE_VERSION
+mkdir dist
+
+cp -vRf "./build/chromiumos-$CHROMEOS_STABILIZE_VERSION/src/build/images/maru-$BOARD_ARCH/*.bin" ./release-$CHROMEOS_STABILIZE_VERSION
+
+tar -czvf ./dist/release-$CHROMEOS_STABILIZE_VERSION.tar.gz ./release-$CHROMEOS_STABILIZE_VERSION
+
+wget -qO -  https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz | tar -xvz
+
+chmod -R 777 ghr_v0.13.0_linux_amd64/*
+
+./ghr_v0.13.0_linux_amd64/ghr "$DRONE_TAG" dist/
