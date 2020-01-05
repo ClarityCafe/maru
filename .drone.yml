@@ -13,6 +13,7 @@ steps:
 - name: Setup Environment
   commands:
   - CHROMEOS_STABILIZE_VERSION="release-R80-12739.B" ./.ci/setup-env
+  
 - name: Build
   commands:
   - ./.ci/build
@@ -35,9 +36,17 @@ steps:
 - name: Setup Environment
   commands: 
   - CHROMEOS_STABILIZE_VERSION="release-R80-12739.B" ./.ci/setup-env
+
 - name: Build
   commands:
   - ./.ci/build
+
+- name: Release to GitHub Release
+  commands:
+     - ./.ci/release
+  when:
+    event:
+      - tag
 
 trigger:
  branch:
