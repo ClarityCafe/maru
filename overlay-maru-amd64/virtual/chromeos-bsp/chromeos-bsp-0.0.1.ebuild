@@ -20,6 +20,7 @@ RDEPEND="
     chromeos-base/chromeos-bsp-maru-amd64
     chromeos-base/maru-oem-wallpapers
     chromeos-base/auto-expand-partition
+	sys-kernel/linux-firmware
     www-plugins/chrome-binary-plugins
 	media-libs/x264
 	!net-wireless/broadcom-sta
