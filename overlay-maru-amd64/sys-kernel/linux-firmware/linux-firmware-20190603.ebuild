@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit mount-boot savedconfig
+inherit savedconfig
 
 if [[ ${PV} == 99999999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/${PN}.git"
 else
-	GIT_COMMIT="f1100ddf581f49aa79a54b56fe6ef0815a7ae57e"
+	GIT_COMMIT="1884732e01bec25affbd5d3366b187b757b095db"
 	SRC_URI="https://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-${GIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="alpha amd64 arm arm64 hppa ia64 mips ppc ppc64 s390 sh sparc x86"
 fi
@@ -21,15 +21,10 @@ LICENSE="GPL-2 GPL-2+ GPL-3 BSD MIT || ( MPL-1.1 GPL-2 )
 		linux-fw-redistributable ( BSD-2 BSD BSD-4 ISC MIT no-source-code ) )
 	unknown-license? ( all-rights-reserved )"
 SLOT="0"
-IUSE="initramfs +redistributable savedconfig unknown-license"
+IUSE="+redistributable savedconfig unknown-license"
 RESTRICT="binchecks strip
 	unknown-license? ( bindist )"
 
-REQUIRED_USE="initramfs? ( redistributable )"
-
-BDEPEND="initramfs? ( app-arch/cpio )"
-
-#add anything else that collides to this
 RDEPEND="!savedconfig? (
 		redistributable? (
 			!sys-firmware/alsa-firmware[alsa_cards_ca0132]
@@ -74,9 +69,7 @@ RDEPEND="!savedconfig? (
 		)
 	)"
 
-pkg_pretend() {
-	use initramfs && mount-boot_pkg_pretend
-}
+#add anything else that collides to this
 
 src_unpack() {
 	if [[ ${PV} == 99999999* ]]; then
@@ -251,41 +244,14 @@ src_prepare() {
 		IFS=$' \t\n'
 	fi
 
-	if use initramfs; then
-		if [[ -d "${S}/amd-ucode" ]]; then
-			local UCODETMP="${T}/ucode_tmp"
-			local UCODEDIR="${UCODETMP}/kernel/x86/microcode"
-			mkdir -p "${UCODEDIR}" || die
-			echo 1 > "${UCODETMP}/early_cpio"
-
-			local amd_ucode_file="${UCODEDIR}/AuthenticAMD.bin"
-			cat "${S}"/amd-ucode/*.bin > "${amd_ucode_file}" || die "Failed to concat amd cpu ucode"
-
-			if [[ ! -s "${amd_ucode_file}" ]]; then
-				die "Sanity check failed: '${amd_ucode_file}' is empty!"
-			fi
-
-			pushd "${UCODETMP}" &>/dev/null || die
-			find . -print0 | cpio --quiet --null -o -H newc -R 0:0 > "${S}"/amd-uc.img
-			popd &>/dev/null || die
-			if [[ ! -s "${S}/amd-uc.img" ]]; then
-				die "Failed to create '${S}/amd-uc.img'!"
-			fi
-		else
-			# If this will ever happen something has changed which
-			# must be reviewed
-			die "'${S}/amd-ucode' not found!"
-		fi
-	fi
-
 	echo "# Remove files that shall not be installed from this list." > ${PN}.conf
-	find * ! -type d ! \( -name ${PN}.conf -o -name amd-uc.img \) >> ${PN}.conf
+	find * ! -type d ! -name ${PN}.conf >> ${PN}.conf
 
 	if use savedconfig; then
 		restore_config ${PN}.conf
 
 		ebegin "Removing all files not listed in config"
-		find ! -type d ! \( -name ${PN}.conf -o -name amd-uc.img \) -printf "%P\n" \
+		find ! -type d ! -name ${PN}.conf -printf "%P\n" \
 			| grep -Fvx -f <(grep -v '^#' ${PN}.conf \
 				|| die "grep failed, empty config file?") \
 			| xargs -d '\n' --no-run-if-empty rm
@@ -299,11 +265,6 @@ src_prepare() {
 src_install() {
 	save_config ${PN}.conf
 	rm ${PN}.conf || die
-
-	if use initramfs ; then
-		mkdir "${ED}/boot" || die
-		mv "${S}"/amd-uc.img "${ED}/boot" || die
-	fi
 
 	if ! ( shopt -s failglob; : * ) 2>/dev/null; then
 		eerror "No files to install. Check your USE flag settings"
@@ -319,9 +280,6 @@ pkg_preinst() {
 	if use savedconfig; then
 		ewarn "USE=savedconfig is active. You must handle file collisions manually."
 	fi
-
-	# Make sure /boot is available if needed.
-	use initramfs && mount-boot_pkg_preinst
 }
 
 pkg_postinst() {
@@ -338,17 +296,4 @@ pkg_postinst() {
 			break
 		fi
 	done
-
-	# Don't forget to umount /boot if it was previously mounted by us.
-	use initramfs && mount-boot_pkg_postinst
-}
-
-pkg_prerm() {
-	# Make sure /boot is mounted so that we can remove /boot/amd-uc.img!
-	use initramfs && mount-boot_pkg_prerm
-}
-
-pkg_postrm() {
-	# Don't forget to umount /boot if it was previously mounted by us.
-	use initramfs && mount-boot_pkg_postrm
 }
