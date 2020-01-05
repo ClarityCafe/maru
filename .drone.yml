@@ -1,0 +1,45 @@
+# Drone CI concifguration for private build service
+
+# Daily builds for Working Tree
+---
+kind: pipeline
+type: exec
+name: build-master
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: Setup Environment
+  commands:
+  - ./.ci/setup-env
+- name: Build
+  commands:
+  - ./.ci/build
+
+trigger:
+ branch:
+   - master
+
+# Maru Aoba Staging Pipeline
+---
+kind: pipeline
+type: exec
+name: build-r80-staging
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: Setup Environment
+  commands:
+  - ./.ci/setup-env
+- name: Build
+  commands:
+  - ./.ci/build
+
+trigger:
+ branch:
+   - release-R80-xxxx.B
