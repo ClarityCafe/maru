@@ -12,7 +12,7 @@ platform:
 steps:
 - name: Setup Environment
   commands:
-  - ./.ci/setup-env
+  - CHROMEOS_STABILIZE_VERSION="release-R80-12739.B" ./.ci/setup-env
 - name: Build
   commands:
   - ./.ci/build
@@ -33,8 +33,8 @@ platform:
 
 steps:
 - name: Setup Environment
-  commands:
-  - ./.ci/setup-env
+  commands: 
+  - CHROMEOS_STABILIZE_VERSION="release-R80-12739.B" ./.ci/setup-env
 - name: Build
   commands:
   - ./.ci/build
