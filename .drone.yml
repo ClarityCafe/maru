@@ -1,7 +1,6 @@
 # Drone CI concifguration for private build service
 
 # Daily builds for Working Tree
----
 kind: pipeline
 type: exec
 name: build-master
