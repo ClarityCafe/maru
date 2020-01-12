@@ -52,7 +52,7 @@ jobs:
           command: |
             export PATH=/usr/local/repo/depot_tools:$PATH;
             cd build/chromiumos-$CHROMEOS_STABILIZE_VERSION/
-            cros_sdk --download -- ./build_packages --board=maru-$BOARD_ARCH && exit;
+            cros_sdk --download -- USE="chrome_internal" ./build_packages --usepkg --board=maru-$BOARD_ARCH && exit;
       - run:
           name: Prepare passing to downstream
           command: |
