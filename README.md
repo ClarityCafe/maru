@@ -133,3 +133,10 @@ Once the image finishes writing to a USB, boot it to your PC, and cross your fin
 ## Contributing
 
 Please read the [Chromium OS Developer Guide](http://www.chromium.org/chromium-os/developer-guide) to get yourself familiarized with how everything works.
+
+
+### Credits
+
+- arnoldthebat for some of the basis of this work.
+- the FlintOS team for the auto-expand-partition ebuild.
+- The rest of the Chromium OS team who has been really helpful with this, thank you! <3

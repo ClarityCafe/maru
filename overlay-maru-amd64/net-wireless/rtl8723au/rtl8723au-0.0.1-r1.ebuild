@@ -32,7 +32,7 @@ pkg_setup() {
 
 	linux-mod_pkg_setup
 
-	BUILD_PARAMS="-C /mnt/host/source/chroot/build/${BOARD}/var/cache/portage/sys-kernel/chromeos-kernel-4_14 M=${S}"
+	BUILD_PARAMS="-C /mnt/host/source/chroot/build/${BOARD}/var/cache/portage/sys-kernel/chromeos-kernel-4_19 M=${S}"
 	BUILD_TARGETS="8723au.ko"
 }
 

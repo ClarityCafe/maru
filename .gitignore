@@ -1,3 +1,4 @@
 rpi3
 .ci/shc
 *.private
+crosbuild/

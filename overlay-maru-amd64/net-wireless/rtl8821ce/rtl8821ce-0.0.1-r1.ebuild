@@ -32,7 +32,7 @@ MODULE_NAMES="8821ce(kernel/drivers/net/wireless/:${S})"
 
 pkg_setup() {
     linux-mod_pkg_setup
-    KERNEL_DIR="/mnt/host/source/chroot/build/${BOARD}/var/cache/portage/sys-kernel/chromeos-kernel-4_14"
+    KERNEL_DIR="/mnt/host/source/chroot/build/${BOARD}/var/cache/portage/sys-kernel/chromeos-kernel-4_19"
 	BUILD_PARAMS="-C ${KERNEL_DIR} M=${S}"
 	BUILD_TARGETS="modules"
 }
