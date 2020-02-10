@@ -1,1 +1,1 @@
-chromos-config-bsp-2.ebuild
+chromeos-config-bsp-2.ebuild
