@@ -4,7 +4,6 @@ dev-config: &dev_config
   powerd-prefs: "{{$device-name}}"
   identity: &base_ident
     # We'll derive from Fizz for now and see what happens...
-    # This is completely untested, and Komachi is not helping me build stuff :(
     platform-name: "Fizz"
     smbios-name-match: "Fizz"
     sku-id: "{{$sku-id}}"
@@ -12,18 +11,14 @@ dev-config: &dev_config
     no-firmware: True
   wallpaper: "{{$wallpaper}}"
 
-wl-dev-config: &wl_dev_config
-  <<: *dev_config
-  identity:
-    <<: *base_ident
-    whitelabel-tag: "{{$whitelabel-tag}}"
-
 chromeos:
   devices:
-    - $device-name: "komachi"
+    - $device-name: "kiana"
       skus:
         - $sku-id: 0
           config: *dev_config
-      products:
+#      products:
         # assuming our buildsystem CWD is somewhere in the project root, let's go to overlays/overlay-maru-amd64
-        $wallpaper: "oem"
+        # FIXME: this might be the cause of the model errors. Can someone check where this key is being accessed at in relative to the chroot env?
+        # Tried already checking CrosConfig package but nothing points to something relevant?
+#        $wallpaper: ""
