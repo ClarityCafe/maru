@@ -1,1 +1,0 @@
-chromeos-config-bsp-2.ebuild
